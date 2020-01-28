@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 let Schema = mongoose.Schema;
 
 let BlogSchema = new Schema({
@@ -15,5 +17,11 @@ let BlogSchema = new Schema({
         default: null
     }
 });
+
+BlogSchema.statics = {
+    createNew(item) {
+        return this.create(item);
+    }
+};
 
 module.exports = mongoose.model('blog', BlogSchema);

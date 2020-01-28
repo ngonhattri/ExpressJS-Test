@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 let Schema = mongoose.Schema;
 
 let BlogCategorySchema = new Schema({
@@ -17,5 +19,11 @@ let BlogCategorySchema = new Schema({
         default: null
     }
 });
+
+BlogCategorySchema.statics = {
+    createNew(item) {
+        return this.create(item);
+    }
+};
 
 module.exports = mongoose.model('blog-category', BlogCategorySchema);
