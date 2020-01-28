@@ -6,13 +6,29 @@
     "author": "minhquan3197 <minhquan.k0r1@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "start": "babel-node server.js"
+        "start": "babel-node src/server.js",
+        "dev": "nodemon src/server.js"
     },
     "dependencies": {
-        "express": "^4.17.1"
+        "bcryptjs": "^2.4.3",
+        "bluebird": "^3.5.3",
+        "body-parser": "^1.18.2",
+        "connect-flash": "^0.1.1",
+        "connect-mongo": "^2.0.1",
+        "dotenv": "^8.2.0",
+        "ejs": "^2.5.7",
+        "express": "^4.17.1",
+        "express-ejs-extend": "0.0.1",
+        "express-session": "^1.15.6",
+        "express-validator": "^4.3.0",
+        "mongoose": "^5.8.10",
+        "passport": "^0.4.0",
+        "passport-local": "^1.0.0",
+        "uuid": "^3.3.2"
     },
     "devDependencies": {
         "babel-cli": "6.26.0",
-        "babel-preset-env": "1.7.0"
+        "babel-preset-env": "1.7.0",
+        "pem": "^1.13.2"
     }
 }
