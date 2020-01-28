@@ -19,6 +19,7 @@ let initRoutes = (app) => {
     }));
     router.get("/", auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
+    router.put('/update-password', auth.checkLoggedIn, authValid.updatePassword, auth.updatePassword)
     return app.use("/", router);
 };
 

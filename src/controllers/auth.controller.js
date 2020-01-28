@@ -44,6 +44,31 @@ let postRegister = async (req, res) => {
     }
 };
 
+let updatePassword = async (req, res) => {
+    let errorArr = [];
+    let validationErrors = validationResult(req)
+    if (validationErrors.isEmpty() == false) {
+        let errors = Object.values(validationErrors.mapped());
+        errors.forEach((element) => {
+            errorArr.push(element.msg);
+        });
+        req.flash('errors', errorArr);
+        return res.redirect("/");
+    }
+    try {
+        let updateUserItem = req.body;
+        await auth.updatePassword(req.user._id, updateUserItem);
+        req.logout();
+        req.flash("success", transSuccess.user_password_updated);
+        return res.redirect("/login");
+    } catch (error) {
+        console.log(error)
+        errorArr.push(error);
+        req.flash("errors", errorArr);
+        return res.redirect("/");
+    }
+};
+
 let getLogout = (req, res) => {
     req.logout();
     req.flash("success", transSuccess.logout_success);
@@ -70,5 +95,6 @@ module.exports = {
     getLogout: getLogout,
     postRegister: postRegister,
     checkLoggedIn: checkLoggedIn,
-    checkLoggedOut: checkLoggedOut
+    checkLoggedOut: checkLoggedOut,
+    updatePassword: updatePassword
 }

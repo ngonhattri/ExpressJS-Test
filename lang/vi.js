@@ -9,7 +9,8 @@ export const transErrors = {
     login_failed: "Sai tài khoản hoặc mật khẩu !",
     server_error: "Có lỗi ở phía server, vui lòng thông báo cho bộ phận hỗ trợ. Xin cám ơn.",
     avatar_type: "Kiểu file không hợp lệ.",
-    avatar_size: "Ảnh upload tối đa cho phép là 1 MB !"
+    avatar_size: "Ảnh upload tối đa cho phép là 1 MB !",
+    user_current_password_failed: "Mật khẩu hiện tại không đúng",
 }
 
 export const transSuccess = {
