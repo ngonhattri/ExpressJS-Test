@@ -1,0 +1,40 @@
+<% extend("./master") %>
+<h4 className="header blue lighter bigger">
+    <i className="ace-icon fa fa-coffee green"></i>Lần đăng nhập đầu tiên<br />
+</h4>
+
+<%- include("alert"); %>
+
+<div class="space-6"></div>
+
+<form method="POST" action="/register">
+    <fieldset>
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="email" name="email" placeholder="Email" class="form-control" />
+                <i class="ace-icon fa fa-user"></i>
+            </span>
+        </label>
+
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="password" name="password" placeholder="Password" class="form-control" />
+                <i class="ace-icon fa fa-lock"></i>
+            </span>
+        </label>
+
+        <label class="block clearfix">
+            <span class="block input-icon input-icon-right">
+                <input type="password" name="password_confirmation" placeholder="Password Confirmation"
+                    class="form-control" />
+                <i class="ace-icon fa fa-lock"></i>
+            </span>
+        </label>
+
+        <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+            <i class="ace-icon fa fa-key"></i>
+            <span class="bigger-110">Register</span>
+        </button>
+        <div class="space"></div>
+    </fieldset>
+</form>
