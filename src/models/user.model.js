@@ -26,13 +26,17 @@ UserSchema.statics = {
     checkIfUserExsits() {
         return this.countDocuments().exec();
     },
-    
+
     createNew(item) {
         return this.create(item);
     },
 
     findByEmail(email) {
-        return this.findOne({ "local.email": email }).exec();
+        return this.findOne({ "email": email }).exec();
+    },
+
+    findUserById(id) {
+        return this.findById(id).exec();
     }
 };
 
