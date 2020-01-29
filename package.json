@@ -11,11 +11,13 @@
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
     },
     "dependencies": {
+        "babel-cli": "6.26.0",
         "bcryptjs": "^2.4.3",
         "bluebird": "^3.5.3",
         "body-parser": "^1.18.2",
         "connect-flash": "^0.1.1",
         "connect-mongo": "^2.0.1",
+        "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "ejs": "^2.5.7",
         "express": "^4.17.1",
@@ -26,7 +28,6 @@
         "mongoose": "^5.8.10",
         "passport": "^0.4.0",
         "passport-local": "^1.0.0",
-        "babel-cli": "6.26.0",
         "uuid": "^3.3.2"
     },
     "devDependencies": {

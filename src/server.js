@@ -7,7 +7,7 @@ import connectFlash from "connect-flash";
 import configSession from "./config/session";
 import passport from "passport";
 import methodOverride from 'method-override';
-
+import cors from 'cors';
 let app = express();
 require('dotenv').config();
 ConnectDB();
@@ -16,6 +16,7 @@ configSession(app);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
 app.use(connectFlash());
+app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 initRoutes(app);
