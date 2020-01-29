@@ -65,6 +65,13 @@
                         </div>
                     </div>
                 </form>
+                <form action="/blogs/status/<%= product._id %>?_method=PUT" method="POST">
+                    <button class="btn btn-warning" type="submit">
+                        <i class="ace-icon fa fa-plane bigger-120"></i>
+                        Đổi trạng thái
+                    </button>
+                </form>
+                <hr />
                 <form action="/blogs/delete/<%= product._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger" type="submit">
                         <i class="ace-icon fa fa-trash-o bigger-120"></i>

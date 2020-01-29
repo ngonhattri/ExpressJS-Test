@@ -63,6 +63,9 @@ BlogSchema.statics = {
     },
     removeItem(id) {
         return this.findOneAndRemove({ _id: id }).exec();
+    },
+    changeStatus(id, statusBlog) {
+        return this.findOneAndUpdate({ _id: id }, { "$set": { "status": !statusBlog } }).exec();
     }
 };
 

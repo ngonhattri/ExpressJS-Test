@@ -45,6 +45,10 @@ let countPaginateApiBlog = async () => {
     return await BlogModel.getCountApiPaginate();
 };
 
+let updateStatus = async (id, status) => {
+    return await BlogModel.changeStatus(id, status);
+}
+
 module.exports = {
     getPaginateBlogs: getPaginateBlogs,
     countPaginateBlog: countPaginateBlog,
@@ -54,5 +58,6 @@ module.exports = {
     removeBlogDetail: removeBlogDetail,
     detailBlogApiPage: detailBlogApiPage,
     getPaginateApiBlogs: getPaginateApiBlogs,
-    countPaginateApiBlog: countPaginateApiBlog
+    countPaginateApiBlog: countPaginateApiBlog,
+    updateStatus: updateStatus
 }

@@ -30,6 +30,7 @@ let initRoutes = (app) => {
     router.get("/blogs/add/", auth.checkLoggedIn, blogs.addBlogs);
     router.get("/blogs/detail/:_id", auth.checkLoggedIn, blogs.detailBlogs);
     router.put("/blogs/update/:_id", auth.checkLoggedIn, blogValid.blog, blogs.updateBlog);
+    router.put("/blogs/status/:_id", auth.checkLoggedIn, blogValid.blog, blogs.changeStatus);
     router.delete("/blogs/delete/:_id", auth.checkLoggedIn, blogs.removeBlog);
     router.get("/blogs/:page", auth.checkLoggedIn, blogs.getBlogs);
     router.get("*", (req, res) => {

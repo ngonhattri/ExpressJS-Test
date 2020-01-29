@@ -109,6 +109,31 @@ let removeBlog = async (req, res) => {
     }
 };
 
+let changeStatus = async (req, res) => {
+    const _id = req.params._id;
+    const detail = await blog.detailBlogPage(_id);
+    if (!detail) errorArr.push('Blog không tồn tại');
+    let errorArr = [];
+    let validationErrors = validationResult(req)
+    if (validationErrors.isEmpty() == false) {
+        let errors = Object.values(validationErrors.mapped());
+        errors.forEach((element) => {
+            errorArr.push(element.msg);
+        });
+        req.flash('errors', errorArr);
+        return res.redirect("/blogs/" + _id);
+    }
+    try {
+        await blog.updateStatus(_id, detail.status);
+        return res.redirect("/blogs");
+    } catch (error) {
+        console.log(error)
+        errorArr.push(error);
+        req.flash("errors", errorArr);
+        return res.redirect("/blogs/" + _id);
+    }
+}
+
 module.exports = {
     getBlogs: getBlogs,
     addBlogs: addBlogs,
@@ -116,4 +141,5 @@ module.exports = {
     postBlogs: postBlogs,
     updateBlog: updateBlog,
     removeBlog: removeBlog,
+    changeStatus: changeStatus
 };
