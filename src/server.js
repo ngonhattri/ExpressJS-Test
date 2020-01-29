@@ -20,6 +20,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 initRoutes(app);
 
-app.listen(process.env.PORT ||process.env.APP_PORT, process.env.APP_HOST, () => {
+app.listen(process.env.PORT || process.env.APP_PORT, () => {
     console.log(`Server listenning at ${process.env.APP_HOST}:${process.env.APP_PORT}/`);
 });
