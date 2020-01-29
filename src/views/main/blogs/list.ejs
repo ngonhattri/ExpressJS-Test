@@ -17,7 +17,7 @@
             <div class="widget-header">
                 <h4 class="widget-title">Quản lý blog</h4>
                 <div class="widget-toolbar no-border">
-                    <a href="/add" class="btn btn-sm btn-info">
+                    <a href="/blogs/add" class="btn btn-sm btn-info">
                         <i class="ace-icon fa fa-plus"></i> Thêm mới blog
                     </a>
                 </div>
@@ -48,13 +48,9 @@
                                 <td><%= product.status %></td>
                                 <td>
                                     <div class="btn-group">
-                                        <!-- <a href={{ pathname: `/blogs/${blog.id}` }} class="btn btn-xs btn-info">
+                                        <a href="/blogs/detail/<%= product._id %>" class="btn btn-xs btn-info">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                        </a> -->
-
-                                        <button class="btn btn-xs btn-danger">
-                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

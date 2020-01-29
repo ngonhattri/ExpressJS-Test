@@ -9,7 +9,35 @@ let countPaginateBlog = async () => {
     return await BlogModel.getCountPaginate();
 };
 
+let createBlog = (name, content, image) => {
+    return new Promise(async (resolve, reject) => {
+        let dataItem = {
+            name: name,
+            content: content,
+            image: image,
+        };
+        let data = await BlogModel.createNew(dataItem);
+        resolve(transSuccess.blog_created(data.name));
+    });
+};
+
+let updateItem = async (id, dataUpdate) => {
+    return await BlogModel.updateItem(id, dataUpdate);
+};
+
+let detailBlogPage = async (id) => {
+    return await BlogModel.findBlogById(id);
+}
+
+let removeBlogDetail = async (id) => {
+    return await BlogModel.removeItem(id);
+}
+
 module.exports = {
     getPaginateBlogs: getPaginateBlogs,
-    countPaginateBlog: countPaginateBlog
+    countPaginateBlog: countPaginateBlog,
+    createBlog: createBlog,
+    detailBlogPage: detailBlogPage,
+    updateItem: updateItem,
+    removeBlogDetail: removeBlogDetail
 }

@@ -38,11 +38,16 @@ BlogSchema.statics = {
     getCountPaginate() {
         return this.countDocuments();
     },
-    findUserById(id) {
+    findBlogById(id) {
+        const check = mongoose.Types.ObjectId.isValid(id);
+        if (!check) return null;
         return this.findById(id).exec();
     },
     updateItem(id, data) {
-        return this.findOneAndUpdate({ id }, data).exec();
+        return this.findOneAndUpdate({ _id: id }, data).exec();
+    },
+    removeItem(id) {
+        return this.findOneAndRemove({ _id: id }).exec();
     }
 };
 
