@@ -89,6 +89,10 @@ let checkLoggedOut = (req, res, next) => {
     next();
 };
 
+let checkApi = (req, res, next) => {
+    next();
+};
+
 module.exports = {
     getLogin: getLogin,
     getRegister: getRegister,
@@ -96,5 +100,6 @@ module.exports = {
     postRegister: postRegister,
     checkLoggedIn: checkLoggedIn,
     checkLoggedOut: checkLoggedOut,
-    updatePassword: updatePassword
+    updatePassword: updatePassword,
+    checkApi: checkApi
 }

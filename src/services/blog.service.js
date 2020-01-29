@@ -33,11 +33,26 @@ let removeBlogDetail = async (id) => {
     return await BlogModel.removeItem(id);
 }
 
+let detailBlogApiPage = async (id) => {
+    return await BlogModel.getDetailApiDetail(id);
+}
+
+let getPaginateApiBlogs = async (resPerPage, page) => {
+    return await BlogModel.getListApiPaginate(resPerPage, page);
+};
+
+let countPaginateApiBlog = async () => {
+    return await BlogModel.getCountApiPaginate();
+};
+
 module.exports = {
     getPaginateBlogs: getPaginateBlogs,
     countPaginateBlog: countPaginateBlog,
     createBlog: createBlog,
     detailBlogPage: detailBlogPage,
     updateItem: updateItem,
-    removeBlogDetail: removeBlogDetail
+    removeBlogDetail: removeBlogDetail,
+    detailBlogApiPage: detailBlogApiPage,
+    getPaginateApiBlogs: getPaginateApiBlogs,
+    countPaginateApiBlog: countPaginateApiBlog
 }

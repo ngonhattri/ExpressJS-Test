@@ -38,6 +38,21 @@ BlogSchema.statics = {
     getCountPaginate() {
         return this.countDocuments();
     },
+    getListApiPaginate(resPerPage, page) {
+        return this.find({ status: true })
+            .skip((resPerPage * page) - resPerPage)
+            .limit(resPerPage)
+    },
+    getCountApiPaginate() {
+        return this.countDocuments({
+            status: true
+        });
+    },
+    getDetailApiDetail(id) {
+        const check = mongoose.Types.ObjectId.isValid(id);
+        if (!check) return null;
+        return this.findOne({ _id: id, status: true }).exec();
+    },
     findBlogById(id) {
         const check = mongoose.Types.ObjectId.isValid(id);
         if (!check) return null;

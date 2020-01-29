@@ -1,5 +1,5 @@
 import express from "express";
-import { home, auth, blogs } from "./../controllers/index";
+import { home, auth, blogs, api } from "./../controllers/index";
 import { authValid, blogValid } from "./../validation/index";
 import passport from "passport";
 import initPassportLocal from "../config/passport_local";
@@ -17,6 +17,11 @@ let initRoutes = (app) => {
         successRedirect: "/",
         failureRedirect: "/login"
     }));
+
+    router.get("/api/v1/blogs/", auth.checkApi, api.getBlogsApi);
+    router.get("/api/v1/blogs/:page", auth.checkApi, api.getBlogsApi);
+    router.get("/api/v1/blogs/detail/:_id", auth.checkApi, api.detailBlogsApi);
+
     router.get("/", auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
     router.put("/update-password", auth.checkLoggedIn, authValid.updatePassword, auth.updatePassword);
