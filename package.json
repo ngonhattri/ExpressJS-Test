@@ -7,7 +7,8 @@
     "license": "MIT",
     "scripts": {
         "start": "babel-node src/server.js",
-        "dev": "nodemon --watch src --exec babel-node src/server.js"
+        "dev": "nodemon --watch src --exec babel-node src/server.js",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
