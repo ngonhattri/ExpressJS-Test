@@ -40,6 +40,7 @@ BlogSchema.statics = {
     },
     getListApiPaginate(resPerPage, page) {
         return this.find({ status: true })
+            .select("name image")
             .skip((resPerPage * page) - resPerPage)
             .limit(resPerPage)
     },
