@@ -1,5 +1,5 @@
 import express from "express";
-import { home, auth } from "./../controllers/index";
+import { home, auth, blogs } from "./../controllers/index";
 import { authValid } from "./../validation/index";
 import passport from "passport";
 import initPassportLocal from "../config/passport_local";
@@ -19,7 +19,10 @@ let initRoutes = (app) => {
     }));
     router.get("/", auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
-    router.put('/update-password', auth.checkLoggedIn, authValid.updatePassword, auth.updatePassword)
+    router.put("/update-password", auth.checkLoggedIn, authValid.updatePassword, auth.updatePassword);
+    router.get("/blogs", auth.checkLoggedIn, blogs.getBlogs);
+    router.get("/add/", auth.checkLoggedIn, blogs.addBlogs);
+    router.get("/:_id", auth.checkLoggedIn, blogs.updateBlogs);
     return app.use("/", router);
 };
 

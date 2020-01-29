@@ -1,0 +1,72 @@
+<% extend("../master") %>
+
+<div class="main-content-inner">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="/">
+                    Trang chủ
+                </a>
+            </li>
+            <li class="active">Blog</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Quản lý blog</h4>
+                <div class="widget-toolbar no-border">
+                    <a href="/add" class="btn btn-sm btn-info">
+                        <i class="ace-icon fa fa-plus"></i> Thêm mới blog
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="search-active-form">
+                        <div class="pageSizebox pull-right">
+                            <div class="pageSizeNumber">
+                                Tổng số bản ghi: <%= numOfResults %>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="simple-table" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="60%">Name</th>
+                                <th width="20%">Status</th>
+                                <th width="20%">Custom</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% products.forEach(product => { %>
+                            <tr>
+
+                                <td><%= product.name %></td>
+                                <td><%= product.status %></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <!-- <a href={{ pathname: `/blogs/${blog.id}` }} class="btn btn-xs btn-info">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </a> -->
+
+                                        <button class="btn btn-xs btn-danger">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="widget-toolbox padding-8 clearfix">
+                    <%- include("paginate"); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

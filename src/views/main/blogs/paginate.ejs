@@ -1,0 +1,26 @@
+<div class="pagination">
+    <% if (currentPage == 1 && pages > 1) { %>
+    <a href="/blogs/<%= parseInt(currentPage) + 1 %>/?search=<%=searchVal%>" <span>
+        Page <%=  parseInt(currentPage) + 1 %>
+        <i class="icon ion-ios-arrow-forward"></i>
+        </span>
+    </a>
+    <% } else if (currentPage < pages) { %>
+    <a href="/blogs/<%= parseInt(currentPage) - 1 %>/?search<%=searchVal%>"><span>
+            <i class="icon ion-ios-arrow-back"></i>
+            Page <%= parseInt(currentPage) - 1 %>
+        </span>
+    </a>
+    <a href="/blogs/<%= parseInt(currentPage) + 1 %>/?search<%=searchVal%>"><span>
+            Page <%= parseInt(currentPage) + 1 %>
+            <i class="icon ion-ios-arrow-forward"></i>
+        </span>
+    </a>
+    <% } else if (currentPage == pages && pages > 1) { %>
+    <a href="/blogs/<%= parseInt(currentPage) - 1 %>/?search<%=searchVal%>"><span>
+            <i class="icon ion-ios-arrow-back"></i>Page
+            <%=parseInt(currentPage) - 1 %>
+        </span>
+    </a>
+    <% } %>
+</div>

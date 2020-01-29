@@ -47,7 +47,7 @@
 
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#!" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="<%= user.avatar %>" alt="Nguyễn Minh Quân" />
+                            <img class="nav-user-photo" src="image/admin.jpg" alt="Nguyễn Minh Quân" />
                             <span class="user-info">
                                 <small>Welcome,</small>
                                 Nguyễn Minh Quân
@@ -94,14 +94,6 @@
                 </li>
 
                 <li>
-                    <a href="/blog_categories">
-                        <i class="menu-icon fa fa-cube"></i>
-                        Danh mục
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-
-                <li>
                     <a href="/blogs">
                         <i class="menu-icon fa fa-cubes"></i>
                         Blog
@@ -139,6 +131,10 @@
     <script src="js/ace-elements.min.js"></script>
     <script src="js/ace.min.js"></script>
     <script src="js/bootbox.js"></script>
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
 </body>
 
 </html>

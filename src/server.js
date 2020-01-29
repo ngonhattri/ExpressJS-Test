@@ -7,6 +7,7 @@ import connectFlash from "connect-flash";
 import configSession from "./config/session";
 import passport from "passport";
 import methodOverride from 'method-override';
+
 let app = express();
 require('dotenv').config();
 ConnectDB();
