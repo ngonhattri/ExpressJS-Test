@@ -2,7 +2,7 @@ import { blog } from "../../services/index";
 
 let getBlogsApi = async (req, res) => {
     const resPerPage = 8;
-    const page = req.params.page || 1;
+    const page = Number(req.query.page).valueOf() || 1;
     const foundProducts = await blog.getPaginateApiBlogs(resPerPage, page);
     const numOfResults = await blog.countPaginateApiBlog();
     return res.status(200).json({
