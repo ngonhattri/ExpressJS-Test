@@ -44,7 +44,7 @@ BlogSchema.statics = {
         let page = Number(options.page) || 1;
         let customFind = {};
         if (status) customFind.status = true;
-        if (category) customFind.categoryId = category;
+        if (category && this.checkObject(category)) customFind.categoryId = category;
         query = this.find(customFind);
         if (select) query.select(select);
         query.sort({ _id: -1 })

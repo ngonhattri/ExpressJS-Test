@@ -8,10 +8,13 @@ let getBlogs = async (req, res) => {
     const foundProducts = await blog.getPaginateBlog(resPerPage, req.query);
     const numOfResults = await blog.getCountBlog(req.query);
     return res.status(200).json({
-        products: foundProducts,
-        currentPage: page,
-        pages: Math.ceil(numOfResults / resPerPage),
-        numOfResults: numOfResults
+        message: 'oK',
+        data: {
+            products: foundProducts,
+            currentPage: page,
+            pages: Math.ceil(numOfResults / resPerPage),
+            numOfResults: numOfResults
+        }
     });
 };
 
