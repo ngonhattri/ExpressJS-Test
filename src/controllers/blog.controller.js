@@ -1,11 +1,11 @@
-import { blog } from "./../services/index";
+import { blog, category } from "./../services/index";
 import { validationResult } from "express-validator/check";
 
 let getBlogs = async (req, res) => {
-    const resPerPage = 9;
-    const page = req.params.page || 1;
-    const foundProducts = await blog.getPaginateBlogs(resPerPage, page);
-    const numOfResults = await blog.countPaginateBlog();
+    const resPerPage = 8;
+    let page = Number(req.query.page) || 1;
+    const foundProducts = await blog.getPaginateBlog(resPerPage, req.query);
+    const numOfResults = await blog.getCountBlog();
     return res.render('main/blogs/list', {
         products: foundProducts,
         currentPage: page,
@@ -17,7 +17,9 @@ let getBlogs = async (req, res) => {
 };
 
 let addBlogs = async (req, res) => {
+    const categories = await category.getCategories();
     return res.render('main/blogs/add', {
+        categories: categories,
         errors: req.flash("errors"),
         success: req.flash("success")
     });
@@ -36,11 +38,12 @@ let postBlogs = async (req, res) => {
         return res.redirect("/blogs/add");
     }
     try {
-        let creatBlogSuccess = await blog.createBlog(req.body.name, req.body.content, req.body.image);
+        let creatBlogSuccess = await blog.createBlog(req.body.name, req.body.content, req.body.image, req.body.categoryId);
         successArr.push(creatBlogSuccess);
         req.flash("success", successArr);
         return res.redirect("/blogs");
     } catch (error) {
+        console.log(error);
         errorArr.push(error);
         req.flash("errors", errorArr);
         return res.redirect("/blogs/add");
@@ -49,10 +52,12 @@ let postBlogs = async (req, res) => {
 
 let detailBlogs = async (req, res) => {
     const _id = req.params._id;
-    const detail = await blog.detailBlogPage(_id);
+    const detail = await blog.detailBlog(_id);
+    const categories = await category.getCategories();
     if (!detail) return res.render("main/404");
     return res.render('main/blogs/detail', {
         product: detail,
+        categories: categories,
         errors: req.flash("errors"),
         success: req.flash("success")
     });
@@ -60,7 +65,7 @@ let detailBlogs = async (req, res) => {
 
 let updateBlog = async (req, res) => {
     const _id = req.params._id;
-    const detail = await blog.detailBlogPage(_id);
+    const detail = await blog.detailBlog(_id);
     if (!detail) errorArr.push('Blog không tồn tại');
     let errorArr = [];
     let validationErrors = validationResult(req)
@@ -74,7 +79,7 @@ let updateBlog = async (req, res) => {
     }
     try {
         let data = req.body;
-        await blog.updateItem(_id, data);
+        await blog.updateBlog(_id, data);
         return res.redirect("/blogs");
     } catch (error) {
         console.log(error)
@@ -86,7 +91,7 @@ let updateBlog = async (req, res) => {
 
 let removeBlog = async (req, res) => {
     const _id = req.params._id;
-    const detail = await blog.detailBlogPage(_id);
+    const detail = await blog.detailBlog(_id);
     if (!detail) errorArr.push('Blog không tồn tại');
     let errorArr = [];
     let validationErrors = validationResult(req)
@@ -99,7 +104,7 @@ let removeBlog = async (req, res) => {
         return res.redirect("/blogs/" + _id);
     }
     try {
-        await blog.removeBlogDetail(_id);
+        await blog.removeBlog(_id);
         return res.redirect("/blogs");
     } catch (error) {
         console.log(error)
@@ -111,7 +116,7 @@ let removeBlog = async (req, res) => {
 
 let changeStatus = async (req, res) => {
     const _id = req.params._id;
-    const detail = await blog.detailBlogPage(_id);
+    const detail = await blog.detailBlog(_id);
     if (!detail) errorArr.push('Blog không tồn tại');
     let errorArr = [];
     let validationErrors = validationResult(req)

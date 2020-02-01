@@ -1,0 +1,57 @@
+<% extend("../master") %>
+
+<div class="main-content-inner">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="/">
+                    Trang chủ
+                </a>
+            </li>
+            <li class="active">Danh mục</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Quản lý danh mục</h4>
+                <div class="widget-toolbar no-border">
+                    <a href="/categories/add" class="btn btn-sm btn-info">
+                        <i class="ace-icon fa fa-plus"></i> Thêm mới danh mục
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <table id="simple-table" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="20%">Name</th>
+                                <th width="60%">Description</th>
+                                <th width="20%">Custom</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% results.forEach(result => { %>
+                            <tr>
+
+                                <td><%= result.name %></td>
+                                <td><%= result.description %></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="/categories/detail/<%= result._id %>" class="btn btn-xs btn-info">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

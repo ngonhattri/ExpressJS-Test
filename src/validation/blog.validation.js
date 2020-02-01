@@ -8,6 +8,9 @@ let blog = [
     check("content", transValidation.content_incorrect)
         .optional()
         .isLength({ min: 3 }),
+    check("categoryId", transValidation.category_incorrect)
+        .optional()
+        .isLength({ min: 3 }),
     check("image", transValidation.image_incorrect)
         .optional()
         .isLength({ min: 3 }),

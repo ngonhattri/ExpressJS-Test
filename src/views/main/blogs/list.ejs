@@ -34,8 +34,9 @@
                     <table id="simple-table" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th width="60%">Name</th>
-                                <th width="20%">Status</th>
+                                <th width="30%">Tên</th>
+                                <th width="30%">Danh mục</th>
+                                <th width="20%">Trạng thái</th>
                                 <th width="20%">Custom</th>
                             </tr>
                         </thead>
@@ -45,7 +46,20 @@
                             <tr>
 
                                 <td><%= product.name %></td>
-                                <td><%= product.status %></td>
+                                <% if(product.categoryId) { %>
+                                <td><%= product.categoryId.name %></td>
+                                <% } %>
+                                <% if(!product.categoryId) { %>
+                                <td>Chưa có danh mục</td>
+                                <% } %>
+
+                                <% if(product.status === true) { %>
+                                <td><span class="badge badge-success">Actived</span></td>
+                                <% } %>
+                                <% if(product.status === false) { %>
+                                <td><span class="badge badge-danger">Blocked</span></td>
+                                <% } %>
+
                                 <td>
                                     <div class="btn-group">
                                         <a href="/blogs/detail/<%= product._id %>" class="btn btn-xs btn-info">

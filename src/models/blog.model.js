@@ -9,8 +9,14 @@ let BlogSchema = new Schema({
     content: {
         type: String,
     },
+    description: {
+        type: String,
+    },
     image: {
         type: String,
+    },
+    categoryId: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'category'
     },
     status: {
         type: Boolean,
@@ -27,46 +33,49 @@ let BlogSchema = new Schema({
 });
 
 BlogSchema.statics = {
-    createNew(item) {
+    add(item) {
         return this.create(item);
     },
-    getListPaginate(resPerPage, page) {
-        return this.find({})
+    paginate(resPerPage, options = {}) {
+        let query;
+        let status = options.status || null;
+        let select = options.select || null;
+        let category = options.category || null;
+        let page = Number(options.page) || 1;
+        let customFind = {};
+        if (status) customFind.status = true;
+        if (category) customFind.categoryId = category;
+        query = this.find(customFind);
+        if (select) query.select(select);
+        query.sort({ _id: -1 })
+        query.populate('categoryId', { name: 'name' })
+        return query
             .skip((resPerPage * page) - resPerPage)
             .limit(resPerPage)
     },
-    getCountPaginate() {
+    count(options = {}) {
+        let status = options.status ? options.status : null;
+        if (status) return this.countDocuments({ status: true });
         return this.countDocuments();
     },
-    getListApiPaginate(resPerPage, page) {
-        return this.find({ status: true })
-            .select("name image createdAt")
-            .skip((resPerPage * page) - resPerPage)
-            .limit(resPerPage)
-    },
-    getCountApiPaginate() {
-        return this.countDocuments({
-            status: true
-        });
-    },
-    getDetailApiDetail(id) {
-        const check = mongoose.Types.ObjectId.isValid(id);
+    detail(id, options = {}) {
+        let status = options.status ? options.status : null;
+        const check = this.checkObject(id);
         if (!check) return null;
-        return this.findOne({ _id: id, status: true }).exec();
+        if (status) return this.findOne({ _id: id, status: true }).exec();
+        return this.findOne({ _id: id }).exec();
     },
-    findBlogById(id) {
-        const check = mongoose.Types.ObjectId.isValid(id);
-        if (!check) return null;
-        return this.findById(id).exec();
-    },
-    updateItem(id, data) {
+    update(id, data) {
         return this.findOneAndUpdate({ _id: id }, data).exec();
     },
-    removeItem(id) {
+    remove(id) {
         return this.findOneAndRemove({ _id: id }).exec();
     },
-    changeStatus(id, statusBlog) {
-        return this.findOneAndUpdate({ _id: id }, { "$set": { "status": !statusBlog } }).exec();
+    status(id, status) {
+        return this.findOneAndUpdate({ _id: id }, { "$set": { "status": !status } }).exec();
+    },
+    checkObject(id) {
+        return mongoose.Types.ObjectId.isValid(id);
     }
 };
 

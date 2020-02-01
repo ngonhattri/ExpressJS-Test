@@ -1,7 +1,7 @@
 <ul class="pagination">
     <% if (currentPage == 1 && pages > 1) { %>
     <li>
-        <a href="/blogs/<%= parseInt(currentPage) + 1 %>">
+        <a href="/blogs?page=<%= parseInt(currentPage) + 1 %>">
             <span>
                 Page <%=  parseInt(currentPage) + 1 %> <i class="fa fa-arrow-right"></i>
             </span>
@@ -9,14 +9,14 @@
     </li>
     <% } else if (currentPage < pages) { %>
     <li>
-        <a href="/blogs/<%= parseInt(currentPage) - 1 %>">
+        <a href="/blogs?page=<%= parseInt(currentPage) - 1 %>">
             <span>
                 Page <%= parseInt(currentPage) - 1 %> <i class="fa fa-arrow-left"></i>
             </span>
         </a>
     </li>
     <li>
-        <a href="/blogs/<%= parseInt(currentPage) + 1 %>">
+        <a href="/blogs?page=<%= parseInt(currentPage) + 1 %>">
             <span>
                 Page <%= parseInt(currentPage) + 1 %> <i class="fa fa-arrow-right"></i>
             </span>
@@ -24,7 +24,7 @@
     </li>
     <% } else if (currentPage == pages && pages > 1) { %>
     <li>
-        <a href="/blogs/<%= parseInt(currentPage) - 1 %>">
+        <a href="/blogs?page=<%= parseInt(currentPage) - 1 %>">
             <span>
                 Page <%=parseInt(currentPage) - 1 %> <i class="fa fa-arrow-left"></i>
             </span>

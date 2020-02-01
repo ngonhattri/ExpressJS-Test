@@ -1,63 +1,47 @@
 import BlogModel from "../models/blog.model";
-import { transErrors, transSuccess } from "./../../lang/vi";
+import { transSuccess } from "./../../lang/vi";
 
-let getPaginateBlogs = async (resPerPage, page) => {
-    return await BlogModel.getListPaginate(resPerPage, page);
+let getPaginateBlog = async (resPerPage, options) => {
+    return await BlogModel.paginate(resPerPage, options);
 };
 
-let countPaginateBlog = async () => {
-    return await BlogModel.getCountPaginate();
+let getCountBlog = async (options) => {
+    return await BlogModel.count(options);
 };
 
-let createBlog = (name, content, image) => {
-    return new Promise(async (resolve, reject) => {
-        let dataItem = {
-            name: name,
-            content: content,
-            image: image,
-        };
-        let data = await BlogModel.createNew(dataItem);
-        resolve(transSuccess.blog_created(data.name));
-    });
+let createBlog = async (name, content, image, categoryId) => {
+    let dataItem = {
+        name: name,
+        content: content,
+        image: image,
+        categoryId: categoryId,
+    };
+    let data = await BlogModel.add(dataItem);
+    return transSuccess.blog_created(data.name);
 };
 
-let updateItem = async (id, dataUpdate) => {
-    return await BlogModel.updateItem(id, dataUpdate);
+let updateBlog = async (id, data) => {
+    return await BlogModel.update(id, data);
 };
 
-let detailBlogPage = async (id) => {
-    return await BlogModel.findBlogById(id);
+let detailBlog = async (id, options) => {
+    return await BlogModel.detail(id, options);
 }
 
-let removeBlogDetail = async (id) => {
-    return await BlogModel.removeItem(id);
+let removeBlog = async (id) => {
+    return await BlogModel.remove(id);
 }
-
-let detailBlogApiPage = async (id) => {
-    return await BlogModel.getDetailApiDetail(id);
-}
-
-let getPaginateApiBlogs = async (resPerPage, page) => {
-    return await BlogModel.getListApiPaginate(resPerPage, page);
-};
-
-let countPaginateApiBlog = async () => {
-    return await BlogModel.getCountApiPaginate();
-};
 
 let updateStatus = async (id, status) => {
-    return await BlogModel.changeStatus(id, status);
+    return await BlogModel.status(id, status);
 }
 
 module.exports = {
-    getPaginateBlogs: getPaginateBlogs,
-    countPaginateBlog: countPaginateBlog,
+    getPaginateBlog: getPaginateBlog,
+    getCountBlog: getCountBlog,
     createBlog: createBlog,
-    detailBlogPage: detailBlogPage,
-    updateItem: updateItem,
-    removeBlogDetail: removeBlogDetail,
-    detailBlogApiPage: detailBlogApiPage,
-    getPaginateApiBlogs: getPaginateApiBlogs,
-    countPaginateApiBlog: countPaginateApiBlog,
+    detailBlog: detailBlog,
+    updateBlog: updateBlog,
+    removeBlog: removeBlog,
     updateStatus: updateStatus
 }

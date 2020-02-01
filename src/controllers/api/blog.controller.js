@@ -1,10 +1,12 @@
 import { blog } from "../../services/index";
 
-let getBlogsApi = async (req, res) => {
+let getBlogs = async (req, res) => {
     const resPerPage = 8;
-    const page = Number(req.query.page).valueOf() || 1;
-    const foundProducts = await blog.getPaginateApiBlogs(resPerPage, page);
-    const numOfResults = await blog.countPaginateApiBlog();
+    const page = Number(req.query.page) || 1;
+    req.query.status = true;
+    req.query.select = 'name image createdAt';
+    const foundProducts = await blog.getPaginateBlog(resPerPage, req.query);
+    const numOfResults = await blog.getCountBlog(req.query);
     return res.status(200).json({
         products: foundProducts,
         currentPage: page,
@@ -13,9 +15,10 @@ let getBlogsApi = async (req, res) => {
     });
 };
 
-let detailBlogsApi = async (req, res) => {
+let detailBlogs = async (req, res) => {
     const _id = req.params._id;
-    const detail = await blog.detailBlogApiPage(_id);
+    req.query.status = true;
+    const detail = await blog.detailBlog(_id);
     if (!detail) return res.status(404).json({
         message: 'Blog is not found',
         data: null
@@ -27,6 +30,6 @@ let detailBlogsApi = async (req, res) => {
 }
 
 module.exports = {
-    getBlogsApi: getBlogsApi,
-    detailBlogsApi: detailBlogsApi
+    getBlogs: getBlogs,
+    detailBlogs: detailBlogs
 };
