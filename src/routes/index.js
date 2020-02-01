@@ -25,6 +25,7 @@ let initRoutes = (app) => {
     // API
     router.get("/api/v1/blogs/", auth.checkApi, api.getBlogs);
     router.get("/api/v1/blogs/detail/:_id", auth.checkApi, api.detailBlogs);
+    router.get("/api/v1/categories/", auth.checkApi, api.getCategories);
 
     // Home
     router.get("/", auth.checkLoggedIn, home.getHome);

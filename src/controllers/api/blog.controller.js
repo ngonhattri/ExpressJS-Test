@@ -1,4 +1,4 @@
-import { blog } from "../../services/index";
+import { blog, category } from "../../services/index";
 
 let getBlogs = async (req, res) => {
     const resPerPage = 8;
@@ -29,7 +29,17 @@ let detailBlogs = async (req, res) => {
     });
 }
 
+
+let getCategories = async (req, res) => {
+    const results = await category.getCategories();
+    return res.status(200).json({
+        message: 'oK',
+        data: results
+    });
+}
+
 module.exports = {
     getBlogs: getBlogs,
-    detailBlogs: detailBlogs
+    detailBlogs: detailBlogs,
+    getCategories: getCategories,
 };
