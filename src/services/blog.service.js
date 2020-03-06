@@ -15,8 +15,7 @@ let getPaginateBlog = async (resPerPage, options) => {
     // Custom find object
     let customFind = {};
     if (status) customFind.status = true;
-    if (category && !BlogModel.checkObject(category)) throw { message: transErrors.system.object_id_invalid }
-    if (category) customFind.categoryId = category;
+    if (category && !!BlogModel.checkObject(category)) customFind.categoryId = category;
     return await BlogModel.paginate(resPerPage, customFind, selectField, page);
 };
 
@@ -28,7 +27,7 @@ let getCountBlog = async (data) => {
     let category = data.category || null;
     let status = data.status || null;
     let query = {};
-    if (category) query.categoryId = category;
+    if (category && !!BlogModel.checkObject(category)) query.categoryId = category;
     if (status) query.status = status;
     return await BlogModel.count(query);
 };

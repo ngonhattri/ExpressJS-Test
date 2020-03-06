@@ -65,7 +65,7 @@ BlogSchema.statics = {
         return this.findOneAndUpdate({ _id: id }, { "$set": { "status": !status } }).exec();
     },
     checkObject(id) {
-        return mongoose.Types.ObjectId.isValid(id);
+        return !!mongoose.Types.ObjectId.isValid(id);
     }
 };
 
