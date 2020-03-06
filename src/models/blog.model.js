@@ -46,7 +46,6 @@ BlogSchema.statics = {
             .limit(resPerPage)
     },
     count(query = {}) {
-        console.log(query)
         return this.countDocuments(query);
     },
     detail(id, options = {}) {

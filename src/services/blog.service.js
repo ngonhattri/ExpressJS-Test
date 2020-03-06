@@ -15,7 +15,7 @@ let getPaginateBlog = async (resPerPage, options) => {
     // Custom find object
     let customFind = {};
     if (status) customFind.status = true;
-    if (category && !this.checkObject(category)) throw { message: transErrors.system.object_id_invalid }
+    if (category && !BlogModel.checkObject(category)) throw { message: transErrors.system.object_id_invalid }
     if (category) customFind.categoryId = category;
     return await BlogModel.paginate(resPerPage, customFind, selectField, page);
 };
