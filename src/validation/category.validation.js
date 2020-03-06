@@ -2,14 +2,14 @@ import { check } from "express-validator/check";
 import { transValidation } from "./../../lang/vi";
 
 let category = [
-    check("name", transValidation.name_incorrect)
+    check("name", transValidation.category.name_incorrect)
         .optional()
         .isLength({ min: 3 }),
-    check("description", transValidation.description_incorrect)
+    check("description", transValidation.category.description_incorrect)
         .optional()
         .isLength({ min: 3 }),
 ];
 
 module.exports = {
-    category: category
+    category
 };

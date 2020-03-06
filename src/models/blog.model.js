@@ -36,27 +36,18 @@ BlogSchema.statics = {
     add(item) {
         return this.create(item);
     },
-    paginate(resPerPage, options = {}) {
-        let query;
-        let status = options.status || null;
-        let select = options.select || null;
-        let category = options.category || null;
-        let page = Number(options.page) || 1;
-        let customFind = {};
-        if (status) customFind.status = true;
-        if (category && this.checkObject(category)) customFind.categoryId = category;
-        query = this.find(customFind);
-        if (select) query.select(select);
-        query.sort({ _id: -1 })
-        query.populate('categoryId', { name: 'name' })
+    paginate(resPerPage, customFind, selectField = null, page) {
+        let query = this.find(customFind);
+        if (selectField) query.select(selectField);
         return query
+            .sort({ _id: -1 })
+            .populate('categoryId', { name: 'name' })
             .skip((resPerPage * page) - resPerPage)
             .limit(resPerPage)
     },
-    count(options = {}) {
-        let status = options.status ? options.status : null;
-        if (status) return this.countDocuments({ status: true });
-        return this.countDocuments();
+    count(query = {}) {
+        console.log(query)
+        return this.countDocuments(query);
     },
     detail(id, options = {}) {
         let status = options.status ? options.status : null;

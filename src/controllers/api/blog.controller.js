@@ -3,8 +3,8 @@ import { blog, category } from "../../services/index";
 let getBlogs = async (req, res) => {
     const resPerPage = 8;
     const page = Number(req.query.page) || 1;
-    req.query.status = true;
     req.query.select = 'name image createdAt';
+    req.query.status = true;
     const foundProducts = await blog.getPaginateBlog(resPerPage, req.query);
     const numOfResults = await blog.getCountBlog(req.query);
     return res.status(200).json({
@@ -13,15 +13,17 @@ let getBlogs = async (req, res) => {
             products: foundProducts,
             currentPage: page,
             pages: Math.ceil(numOfResults / resPerPage),
-            numOfResults: numOfResults
+            numOfResults
         }
     });
 };
 
 let detailBlogs = async (req, res) => {
     const _id = req.params._id;
-    req.query.status = true;
-    const detail = await blog.detailBlog(_id);
+    const options = {
+        status: true
+    };
+    const detail = await blog.detailBlog(_id, options);
     if (!detail) return res.status(404).json({
         message: 'Blog is not found',
         data: null

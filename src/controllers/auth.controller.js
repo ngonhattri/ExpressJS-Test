@@ -1,27 +1,63 @@
 import { validationResult } from "express-validator/check";
 import { auth } from "./../services/index";
 import { transSuccess } from "./../../lang/vi";
+
+/**
+ * This is function get view login
+ * @param {*} req 
+ * @param {*} res 
+ */
 let getLogin = async (req, res) => {
+
+    // If not admin
     const check = await auth.checkExistsUser();
     if (!check) return res.redirect("/register");
+
     return res.render("auth/login", {
         errors: req.flash("errors"),
-        success: req.flash("success")
+        success: req.flash("success"),
+        value: req.flash("value")
     });
 };
 
+/**
+ * This is function get view reigster
+ * @param {*} req 
+ * @param {*} res 
+ */
 let getRegister = async (req, res) => {
+
+    // If exists admin
     const check = await auth.checkExistsUser();
     if (check) return res.redirect("/login");
+
     return res.render("auth/register", {
         errors: req.flash("errors"),
-        success: req.flash("success")
+        success: req.flash("success"),
+        value: req.flash("value")
     });
 };
 
+/**
+ * This is function logout user
+ * @param {*} req 
+ * @param {*} res 
+ */
+let getLogout = (req, res) => {
+    req.logout();
+    req.flash("success", transSuccess.auth.logout_success);
+    return res.redirect("/login");
+};
+
+/**
+ * This is function register user
+ * @param {*} req 
+ * @param {*} res 
+ */
 let postRegister = async (req, res) => {
     let errorArr = [];
-    let successArr = [];
+
+    // Check validate
     let validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
         let errors = Object.values(validationErrors.mapped());
@@ -29,25 +65,33 @@ let postRegister = async (req, res) => {
             errorArr.push(item.msg);
         });
         req.flash("errors", errorArr);
+        req.flash("value", req.body);
         return res.redirect("/register");
     }
-    try {
-        let createUserSuccess = await auth.register(req.body.email, req.body.gender, req.body.password);
-        successArr.push(createUserSuccess);
 
-        req.flash("success", successArr);
+    // Create user
+    try {
+        let createUserSuccess = await auth.registerNewUser(req.body.email, req.body.password);
+        req.flash("success", transSuccess.user.user_created(createUserSuccess.email));
         return res.redirect("/login");
     } catch (error) {
-        errorArr.push(error);
-        req.flash("errors", errorArr);
+        req.flash("errors", error.message);
+        req.flash("value", req.body);
         return res.redirect("register");
     }
 };
 
+/**
+ * This is function updater password user
+ * @param {*} req 
+ * @param {*} res 
+ */
 let updatePassword = async (req, res) => {
     let errorArr = [];
+
+    // Check validate
     let validationErrors = validationResult(req)
-    if (validationErrors.isEmpty() == false) {
+    if (!validationErrors.isEmpty()) {
         let errors = Object.values(validationErrors.mapped());
         errors.forEach((element) => {
             errorArr.push(element.msg);
@@ -55,51 +99,25 @@ let updatePassword = async (req, res) => {
         req.flash('errors', errorArr);
         return res.redirect("/");
     }
+
+    // Update user
     try {
         let updateUserItem = req.body;
-        await auth.updatePassword(req.user._id, updateUserItem);
+        await auth.updateUserPassword(req.user._id, updateUserItem);
         req.logout();
-        req.flash("success", transSuccess.user_password_updated);
+        req.flash("success", transSuccess.auth.user_info_updated);
         return res.redirect("/login");
     } catch (error) {
-        console.log(error)
-        errorArr.push(error);
+        errorArr.push(error.message);
         req.flash("errors", errorArr);
         return res.redirect("/");
     }
 };
 
-let getLogout = (req, res) => {
-    req.logout();
-    req.flash("success", transSuccess.logout_success);
-    return res.redirect("/login");
-};
-
-let checkLoggedIn = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        return res.redirect("/login");
-    }
-    next();
-};
-
-let checkLoggedOut = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        return res.redirect("/");
-    }
-    next();
-};
-
-let checkApi = (req, res, next) => {
-    next();
-};
-
 module.exports = {
-    getLogin: getLogin,
-    getRegister: getRegister,
-    getLogout: getLogout,
-    postRegister: postRegister,
-    checkLoggedIn: checkLoggedIn,
-    checkLoggedOut: checkLoggedOut,
-    updatePassword: updatePassword,
-    checkApi: checkApi
+    getLogin,
+    getRegister,
+    getLogout,
+    postRegister,
+    updatePassword,
 }

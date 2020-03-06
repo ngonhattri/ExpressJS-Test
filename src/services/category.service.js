@@ -1,35 +1,54 @@
 import CategoryModel from "../models/category.model";
-import { transSuccess } from "./../../lang/vi";
 
+/**
+ * This is function create category
+ * @param {*} name 
+ * @param {*} description 
+ */
 let createCategory = async (name, description) => {
     let item = {
-        name: name,
-        description: description,
+        name,
+        description,
     }
-    let result = await CategoryModel.add(item);
-    return transSuccess.blog_created(result.name);
+    return await CategoryModel.add(item);
 }
 
+/**
+ * This is function update category
+ * @param {*} id 
+ * @param {*} data 
+ */
 let updateCategory = async (id, data) => {
     return await CategoryModel.update(id, data);
 };
 
+/**
+ * This is function detail category
+ * @param {*} id 
+ */
 let detailCategory = async (id) => {
     return await CategoryModel.detail(id);
 }
 
+/**
+ * This is function remove category
+ * @param {*} id 
+ */
 let removeCategory = async (id) => {
     return await CategoryModel.remove(id);
 }
 
+/**
+ * This is function get list
+ */
 let getCategories = async () => {
     return await CategoryModel.list();
 }
 
 module.exports = {
-    getCategories: getCategories,
-    createCategory: createCategory,
-    detailCategory: detailCategory,
-    updateCategory: updateCategory,
-    removeCategory: removeCategory,
+    getCategories,
+    createCategory,
+    detailCategory,
+    updateCategory,
+    removeCategory,
 }

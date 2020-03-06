@@ -1,51 +1,49 @@
 import UserModel from "../models/user.model";
 import bcrypt from "bcryptjs";
-import { transErrors, transSuccess } from "./../../lang/vi";
+import { transErrors } from "./../../lang/vi";
 
 let saltRounds = 7;
 
+/**
+ * This is function check if user existsed in database
+ */
 let checkExistsUser = async () => {
     const check = await UserModel.checkIfUserExsits();
     return !!check;
 };
 
-let register = (email, gender, password) => {
-    return new Promise(async (resolve, reject) => {
-        let userByEmail = await UserModel.findByEmail(email);
-        if (userByEmail) {
-            return reject(transErrors.account_in_use);
-        }
-
-        let salt = bcrypt.genSaltSync(saltRounds);
-        let userItem = {
-            email: email,
-            password: bcrypt.hashSync(password, salt),
-        };
-        let user = await UserModel.createNew(userItem);
-        resolve(transSuccess.user_created(user.email));
-    });
+/**
+ * This is function register new user
+ * @param {*} email 
+ * @param {*} password 
+ */
+let registerNewUser = async (email, password) => {
+    let userByEmail = await UserModel.findByEmail(email);
+    if (userByEmail) throw { message: transErrors.auth.account_in_use };
+    let salt = bcrypt.genSaltSync(saltRounds);
+    let userItem = {
+        email: email,
+        password: bcrypt.hashSync(password, salt),
+    };
+    return await UserModel.createNew(userItem);
 };
 
-let updatePassword = (id, dataUpdate) => {
-    return new Promise(async (resolve, reject) => {
-        let currentUser = await UserModel.findUserById(id);
-        if (!currentUser) {
-            return reject(transErrors.account_undefined);
-        }
-        let checkCurrentPassword = await currentUser.comparePassword(dataUpdate.old_password);
-        if (!checkCurrentPassword) {
-            return reject(transErrors.user_current_password_failed);
-        }
-
-        let salt = bcrypt.genSaltSync(saltRounds);
-        await UserModel.updatePassword(id, bcrypt.hashSync(dataUpdate.password, salt));
-        resolve(true);
-
-    });
+/**
+ * This is function update password
+ * @param {*} id 
+ * @param {*} dataUpdate 
+ */
+let updateUserPassword = async (id, dataUpdate) => {
+    let currentUser = await UserModel.findUserById(id);
+    if (!currentUser) throw { message: transErrors.auth.account_undefined };
+    let checkCurrentPassword = await currentUser.comparePassword(dataUpdate.old_password);
+    if (!checkCurrentPassword) throw { message: transErrors.auth.user_current_password_failed };
+    let salt = bcrypt.genSaltSync(saltRounds);
+    return await UserModel.updatePassword(id, bcrypt.hashSync(dataUpdate.password, salt));
 };
 
 module.exports = {
-    checkExistsUser: checkExistsUser,
-    register: register,
-    updatePassword: updatePassword
+    checkExistsUser,
+    registerNewUser,
+    updateUserPassword
 }

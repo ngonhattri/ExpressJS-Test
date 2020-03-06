@@ -24,6 +24,7 @@
             </div>
             <div class="widget-body">
                 <div class="widget-main">
+                    <%- include("alert"); %>
                     <table id="simple-table" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -36,7 +37,6 @@
                         <tbody>
                             <% results.forEach(result => { %>
                             <tr>
-
                                 <td><%= result.name %></td>
                                 <td><%= result.description %></td>
                                 <td>

@@ -5,10 +5,6 @@ import { transErrors, transSuccess } from "../../lang/vi";
 
 let LocalStratery = passportLocal.Strategy;
 
-/**
- * Valid user account type: local
- */
-
 let initPassportLocal = () => {
     passport.use(new LocalStratery({
         usernameField: "email",
@@ -18,18 +14,18 @@ let initPassportLocal = () => {
         try {
             let user = await UserModel.findByEmail(email);
             if (!user) {
-                return done(null, false, req.flash("errors", transErrors.login_failed));
+                return done(null, false, req.flash("errors", transErrors.auth.login_failed));
             }
-
             let checkPassword = await user.comparePassword(password);
             if (!checkPassword) {
-                return done(null, false, req.flash("errors", transErrors.login_failed));
+                return done(null, false, req.flash("errors", transErrors.auth.login_failed));
             }
-            return done(null, user, req.flash("success", transSuccess.login_success(user.email)));
+            return done(null, user, req.flash("success", transSuccess.auth.login_success(user.email)));
         } catch (error) {
+            
             // Server Error
             console.log(error);
-            return done(null, false, req.flash("errors", transErrors.server_error));
+            return done(null, false, req.flash("errors", transErrors.system.server_error));
         }
     }));
 

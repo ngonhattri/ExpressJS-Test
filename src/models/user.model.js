@@ -26,19 +26,15 @@ UserSchema.statics = {
     checkIfUserExsits() {
         return this.countDocuments().exec();
     },
-
     createNew(item) {
         return this.create(item);
     },
-
     findByEmail(email) {
         return this.findOne({ "email": email }).exec();
     },
-
     findUserById(id) {
         return this.findById(id).exec();
     },
-
     updatePassword(id, hashedPassword) {
         return this.findOneAndUpdate({ _id: id }, { "password": hashedPassword }).exec();
     }

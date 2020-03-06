@@ -1,8 +1,10 @@
 import session from "express-session";
 import connectMongo from "connect-mongo";
-require('dotenv').config();
-let MongoStore = connectMongo(session);
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+let MongoStore = connectMongo(session);
 /**
  * This variable is where save session, in this case is mongodb
  */
@@ -11,6 +13,7 @@ let sessionStore = new MongoStore({
     autoReconnect: true,
     autoRemove: "native"
 });
+
 /**
  * Config session for app
  * @param app from exactly express module

@@ -1,14 +1,45 @@
 import BlogModel from "../models/blog.model";
-import { transSuccess } from "./../../lang/vi";
+import { transErrors } from "./../../lang/vi";
 
+/**
+ * This is function get blog list with paginate
+ * @param {*} resPerPage 
+ * @param {*} options 
+ */
 let getPaginateBlog = async (resPerPage, options) => {
-    return await BlogModel.paginate(resPerPage, options);
+    let status = options.status || null;
+    let selectField = options.select || null;
+    let category = options.category || null;
+    let page = Number(options.page) || 1;
+
+    // Custom find object
+    let customFind = {};
+    if (status) customFind.status = true;
+    if (category && !this.checkObject(category)) throw { message: transErrors.system.object_id_invalid }
+    if (category) customFind.categoryId = category;
+    return await BlogModel.paginate(resPerPage, customFind, selectField, page);
 };
 
-let getCountBlog = async (options) => {
-    return await BlogModel.count(options);
+/**
+ * This is function get count blog
+ * @param {*} options 
+ */
+let getCountBlog = async (data) => {
+    let category = data.category || null;
+    let status = data.status || null;
+    let query = {};
+    if (category) query.categoryId = category;
+    if (status) query.status = status;
+    return await BlogModel.count(query);
 };
 
+/**
+ * This is function create blog
+ * @param {*} name 
+ * @param {*} content 
+ * @param {*} image 
+ * @param {*} categoryId 
+ */
 let createBlog = async (name, content, image, categoryId) => {
     let dataItem = {
         name: name,
@@ -16,8 +47,7 @@ let createBlog = async (name, content, image, categoryId) => {
         image: image,
         categoryId: categoryId,
     };
-    let data = await BlogModel.add(dataItem);
-    return transSuccess.blog_created(data.name);
+    return await BlogModel.add(dataItem);
 };
 
 let updateBlog = async (id, data) => {
@@ -37,11 +67,11 @@ let updateStatus = async (id, status) => {
 }
 
 module.exports = {
-    getPaginateBlog: getPaginateBlog,
-    getCountBlog: getCountBlog,
-    createBlog: createBlog,
-    detailBlog: detailBlog,
-    updateBlog: updateBlog,
-    removeBlog: removeBlog,
-    updateStatus: updateStatus
+    getPaginateBlog,
+    getCountBlog,
+    createBlog,
+    detailBlog,
+    updateBlog,
+    removeBlog,
+    updateStatus
 }
