@@ -7,10 +7,14 @@ import CategoryModel from "../models/category.model";
  * @param {*} description 
  */
 let createTest = async (data) => {
-    const { name, difficuly, categoryId } = data;
+    const {
+        name,
+        difficulty,
+        categoryId
+    } = data;
     let item = {
         name,
-        difficuly,
+        difficulty,
         categoryId
     }
     const test = await TestModel.add(item);
@@ -24,10 +28,14 @@ let createTest = async (data) => {
  * @param {*} data 
  */
 let updateTest = async (id, data) => {
-    const { name, difficuly, categoryId } = data;
+    const {
+        name,
+        difficulty,
+        categoryId
+    } = data;
     let item = {
         name,
-        difficuly,
+        difficulty,
         categoryId
     };
     const test = await TestModel.update(id, item);

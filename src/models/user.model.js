@@ -12,11 +12,10 @@ let UserSchema = new Schema({
         type: String,
         default: 'https://res.cloudinary.com/kori/image/upload/v1545012923/no_avatar.png'
     },
-    complete: [
-        {
-            type: mongoose.Schema.Types.ObjectId, ref: 'complete'
-        }
-    ],
+    complete: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'complete'
+    }],
     createdAt: {
         type: Number,
         default: Date.now
@@ -35,19 +34,37 @@ UserSchema.statics = {
         return this.create(item);
     },
     findByEmail(email) {
-        return this.findOne({ "email": email }).exec();
+        return this.findOne({
+            "email": email
+        }).exec();
     },
     findUserById(id) {
         return this.findById(id).exec();
     },
     updatePassword(id, hashedPassword) {
-        return this.findOneAndUpdate({ _id: id }, { "password": hashedPassword }).exec();
+        return this.findOneAndUpdate({
+            _id: id
+        }, {
+            "password": hashedPassword
+        }).exec();
     },
     push(id, data) {
-        return this.findOneAndUpdate({ _id: id }, { $push: { done_test: data } }).exec();
+        return this.findOneAndUpdate({
+            _id: id
+        }, {
+            $push: {
+                done_test: data
+            }
+        }).exec();
     },
     pull(id, data) {
-        return this.findOneAndUpdate({ _id: id }, { $pull: { done_test: data } }).exec();
+        return this.findOneAndUpdate({
+            _id: id
+        }, {
+            $pull: {
+                done_test: data
+            }
+        }).exec();
     }
 };
 
