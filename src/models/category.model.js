@@ -20,14 +20,17 @@ let CategorySchema = new Schema({
 });
 
 CategorySchema.statics = {
-    list() {
-        return this.find({}).exec();
-    },
     add(item) {
         return this.create(item);
     },
+    list() {
+        return this.find({});
+    },
+    count(query = {}) {
+        return this.countDocuments(query);
+    },
     detail(id) {
-        return this.findById(id).exec();
+        return this.findOne({ _id: id }).exec();
     },
     update(id, data) {
         return this.findOneAndUpdate({ _id: id }, data).exec();

@@ -1,6 +1,6 @@
 import express from "express";
-import { home, auth, blogs, tests, api, api1, categories } from "./../controllers/index";
-import { authValid, blogValid, categoryValid, testValid } from "./../validation/index";
+import { home, auth, tests, api, categories, questions } from "./../controllers/index";
+import { authValid, categoryValid, testValid, questionValid } from "./../validation/index";
 import passport from "passport";
 import initPassportLocal from "../config/passport_local";
 import { checkDefault, checkLoggedIn, checkLoggedOut } from '../config/middleware';
@@ -26,23 +26,10 @@ let initRoutes = (app) => {
     router.put("/update-password", checkLoggedIn, authValid.updatePassword, auth.updatePassword);
 
     // API
-    router.get("/api/v1/blogs/", checkDefault, api1.getBlogs);
-    router.get("/api/v1/blogs/detail/:_id", checkDefault, api1.detailBlogs);
     router.get("/api/v1/tests/", checkDefault, api.getTests);
     router.get("/api/v1/tests/detail/:_id", checkDefault, api.detailTests);
-    router.get("/api/v1/categories/", checkDefault, api.getCategories);
-
     // Home
     router.get("/", checkLoggedIn, home.getHome);
-
-    // Blog
-    router.get("/blogs", checkLoggedIn, blogs.getBlogs);
-    router.post("/blogs", checkLoggedIn, blogValid.blog, blogs.postBlogs);
-    router.get("/blogs/add/", checkLoggedIn, blogs.createBlog);
-    router.get("/blogs/detail/:_id", checkLoggedIn, blogs.detailBlog);
-    router.put("/blogs/update/:_id", checkLoggedIn, blogValid.blog, blogs.updateBlog);
-    router.put("/blogs/status/:_id", checkLoggedIn, blogValid.blog, blogs.changeStatus);
-    router.delete("/blogs/delete/:_id", checkLoggedIn, blogs.removeBlog);
 
     // Test
     router.get("/tests", checkLoggedIn, tests.getTests);
@@ -60,6 +47,13 @@ let initRoutes = (app) => {
     router.get("/categories/detail/:_id", checkLoggedIn, categories.detailCategory);
     router.put("/categories/update/:_id", checkLoggedIn, categoryValid.category, categories.updateCategory);
     router.delete("/categories/delete/:_id", checkLoggedIn, categories.removeCategory);
+
+    router.get("/questions", checkLoggedIn, questions.getQuestions);
+    router.post("/questions", checkLoggedIn, questionValid.question, questions.postQuestion);
+    router.get("/questions/add", checkLoggedIn, questions.createQuestion);
+    router.get("/questions/detail/:_id", checkLoggedIn, questions.detailQuestion);
+    router.put("/questions/update/:_id", checkLoggedIn, questionValid.question, questions.updateQuestion);
+    router.delete("/questions/delete/:_id", checkLoggedIn, questions.removeQuestion);
 
     // 404
     router.get("*", (req, res) => {

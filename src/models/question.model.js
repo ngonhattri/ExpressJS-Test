@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 let Schema = mongoose.Schema;
 
 let QuestionSchema = new Schema({
-    name: {type: String},
-    questions: [
-        {
-            type: mongoose.Schema.Types.ObjectId, ref: 'answer'
-        }
-    ],
+    question: {
+        type: String
+    },
+    answer: {
+        type: String
+    },
     testId: {
         type: mongoose.Schema.Types.ObjectId, ref: 'test'
     },
@@ -26,23 +26,13 @@ QuestionSchema.statics = {
     add(item) {
         return this.create(item);
     },
-    paginate(resPerPage, customFind, selectField = null, page) {
-        let query = this.find(customFind);
-        if (selectField) query.select(selectField);
-        return query
-            .sort({ _id: -1 })
-            .populate('testId', { name: 'name' })
-            .skip((resPerPage * page) - resPerPage)
-            .limit(resPerPage)
+    list() {
+        return this.find({});
     },
     count(query = {}) {
         return this.countDocuments(query);
     },
-    detail(id, options = {}) {
-        let status = options.status ? options.status : null;
-        const check = this.checkObject(id);
-        if (!check) return null;
-        if (status) return this.findOne({ _id: id, status: true }).exec();
+    detail(id) {
         return this.findOne({ _id: id }).exec();
     },
     update(id, data) {
@@ -50,12 +40,6 @@ QuestionSchema.statics = {
     },
     remove(id) {
         return this.findOneAndRemove({ _id: id }).exec();
-    },
-    status(id, status) {
-        return this.findOneAndUpdate({ _id: id }, { "$set": { "status": !status } }).exec();
-    },
-    checkObject(id) {
-        return !!mongoose.Types.ObjectId.isValid(id);
     }
 };
 
