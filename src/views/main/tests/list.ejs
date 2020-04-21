@@ -1,0 +1,84 @@
+<% extend("../master") %>
+
+<div class="main-content-inner">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="/">
+                    Trang chủ
+                </a>
+            </li>
+            <li class="active">Test</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">Quản lý Test</h4>
+                <div class="widget-toolbar no-border">
+                    <a href="/tests/add" class="btn btn-sm btn-info">
+                        <i class="ace-icon fa fa-plus"></i> Thêm mới test
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="search-active-form">
+                        <div class="pageSizebox pull-right">
+                            <div class="pageSizeNumber">
+                                Tổng số cau hoi: <%= numOfResults %>
+                            </div>
+                        </div>
+                    </div>
+                    <%- include("alert"); %>
+                    <table id="simple-table" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th width="30%">Question</th>
+                                <th width="30%">Category</th>
+                                <th width="20%">Status</th>
+                                <th width="20%">Custom</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% products.forEach(product => { %>
+                            <tr>
+
+                                <td><%= product.question %></td>
+                                <% if(product.categoryId) { %>
+                                <td><%= product.categoryId.question %></td>
+                                <% } %>
+
+                                <% if(!product.categoryId) { %>
+                                <td>Chưa có danh mục</td>
+                                <% } %>
+
+                                <% if(product.status === true) { %>
+                                <td><span class="badge badge-success">Actived</span></td>
+                                <% } %>
+                                <% if(product.status === false) { %>
+                                <td><span class="badge badge-danger">Blocked</span></td>
+                                <% } %>
+
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="/tests/detail/<%= product._id %>" class="btn btn-xs btn-info">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="widget-toolbox padding-8 clearfix">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

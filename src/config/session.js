@@ -9,7 +9,7 @@ let MongoStore = connectMongo(session);
  * This variable is where save session, in this case is mongodb
  */
 let sessionStore = new MongoStore({
-    url: `${process.env.DB_CONNECTION}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    url: 'mongodb://localhost/tri',
     autoReconnect: true,
     autoRemove: "native"
 });

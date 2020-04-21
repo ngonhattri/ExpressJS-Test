@@ -12,6 +12,19 @@ let UserSchema = new Schema({
         type: String,
         default: 'https://res.cloudinary.com/kori/image/upload/v1545012923/no_avatar.png'
     },
+    done_test:[
+        {
+            test: {
+                type: Schema.Types.ObjectId, ref: 'test'
+            },
+            point: {
+                type: Number,
+            },
+            date_completed: {
+                type: Date,
+            },
+        },
+    ],
     createdAt: {
         type: Number,
         default: Date.now

@@ -15,6 +15,12 @@ export const transValidation = {
         image_incorrect: "Độ dài ảnh không đủ",
         category_incorrect: "Chưa chọn danh mục",
     },
+    test: {
+        question_incorrect: "Độ dài câu hỏi không đủ",
+        correctAns_incorrect: "Độ dài đáp án không đủ",
+        difficulty_incorrect: "Độ dài độ khó không đủ",
+        category_incorrect: "Chưa chọn danh mục",
+    },
 }
 
 export const transErrors = {

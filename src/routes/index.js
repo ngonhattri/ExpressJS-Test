@@ -1,6 +1,6 @@
 import express from "express";
-import { home, auth, blogs, api, categories } from "./../controllers/index";
-import { authValid, blogValid, categoryValid } from "./../validation/index";
+import { home, auth, blogs, tests, api, api1, categories } from "./../controllers/index";
+import { authValid, blogValid, categoryValid, testValid } from "./../validation/index";
 import passport from "passport";
 import initPassportLocal from "../config/passport_local";
 import { checkDefault, checkLoggedIn, checkLoggedOut } from '../config/middleware';
@@ -26,8 +26,10 @@ let initRoutes = (app) => {
     router.put("/update-password", checkLoggedIn, authValid.updatePassword, auth.updatePassword);
 
     // API
-    router.get("/api/v1/blogs/", checkDefault, api.getBlogs);
-    router.get("/api/v1/blogs/detail/:_id", checkDefault, api.detailBlogs);
+    router.get("/api/v1/blogs/", checkDefault, api1.getBlogs);
+    router.get("/api/v1/blogs/detail/:_id", checkDefault, api1.detailBlogs);
+    router.get("/api/v1/tests/", checkDefault, api.getTests);
+    router.get("/api/v1/tests/detail/:_id", checkDefault, api.detailTests);
     router.get("/api/v1/categories/", checkDefault, api.getCategories);
 
     // Home
@@ -41,6 +43,15 @@ let initRoutes = (app) => {
     router.put("/blogs/update/:_id", checkLoggedIn, blogValid.blog, blogs.updateBlog);
     router.put("/blogs/status/:_id", checkLoggedIn, blogValid.blog, blogs.changeStatus);
     router.delete("/blogs/delete/:_id", checkLoggedIn, blogs.removeBlog);
+
+    // Test
+    router.get("/tests", checkLoggedIn, tests.getTests);
+    router.post("/tests", checkLoggedIn, testValid.test, tests.postTests);
+    router.get("/tests/add/", checkLoggedIn, tests.createTest);
+    router.get("/tests/detail/:_id", checkLoggedIn, tests.detailTest);
+    router.put("/tests/update/:_id", checkLoggedIn, testValid.test, tests.updateTest);
+    router.put("/tests/status/:_id", checkLoggedIn, testValid.test, tests.changeStatus);
+    router.delete("/tests/delete/:_id", checkLoggedIn, tests.removeTest);
 
     // Category
     router.get("/categories", checkLoggedIn, categories.getCategories);

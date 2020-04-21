@@ -1,0 +1,34 @@
+<ul class="pagination">
+    <% if (currentPage == 1 && pages > 1) { %>
+    <li>
+        <a href="/tests?page=<%= parseInt(currentPage) + 1 %>">
+            <span>
+                Page <%=  parseInt(currentPage) + 1 %> <i class="fa fa-arrow-right"></i>
+            </span>
+        </a>
+    </li>
+    <% } else if (currentPage < pages) { %>
+    <li>
+        <a href="/tests?page=<%= parseInt(currentPage) - 1 %>">
+            <span>
+                Page <%= parseInt(currentPage) - 1 %> <i class="fa fa-arrow-left"></i>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="/tests?page=<%= parseInt(currentPage) + 1 %>">
+            <span>
+                Page <%= parseInt(currentPage) + 1 %> <i class="fa fa-arrow-right"></i>
+            </span>
+        </a>
+    </li>
+    <% } else if (currentPage == pages && pages > 1) { %>
+    <li>
+        <a href="/tests?page=<%= parseInt(currentPage) - 1 %>">
+            <span>
+                Page <%=parseInt(currentPage) - 1 %> <i class="fa fa-arrow-left"></i>
+            </span>
+        </a>
+    </li>
+    <% } %>
+</ul>
