@@ -39,7 +39,10 @@ TestSchema.statics = {
         return this.countDocuments(query);
     },
     detail(id) {
-        return this.findOne({ _id: id }).populate('categoryId', { name: 'name' }).exec();
+        return this.findOne({ _id: id })
+            .populate('categoryId', { name: 'name' })
+            .populate('questions')
+            .exec();
     },
     update(id, data) {
         return this.findOneAndUpdate({ _id: id }, data).exec();
@@ -47,10 +50,10 @@ TestSchema.statics = {
     remove(id) {
         return this.findOneAndRemove({ _id: id }).exec();
     },
-    push(id, data) {
+    pushItem(id, data) {
         return this.findOneAndUpdate({ _id: id }, { $push: { questions: data } }).exec();
     },
-    pull(id, data) {
+    pullItem(id, data) {
         return this.findOneAndUpdate({ _id: id }, { $pull: { questions: data } }).exec();
     }
 };

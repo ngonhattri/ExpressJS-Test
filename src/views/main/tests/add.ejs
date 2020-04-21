@@ -20,255 +20,109 @@
             <h1>Thêm mới Test</h1>
         </div>
         <%- include("alert"); %>
-        <div class="row">
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <td colspan="1">
-                            <label class="control-label">Content</label>
-                            <form class="well form-horizontal" method="POST" action="/test">
-                                <fieldset>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Tên Test</label>
-                                        <div class="col-md-8 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="fullName"
-                                                    name="fullName" placeholder="Full Name" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Danh mục</label>
-                                        <div class="col-md-8 inputGroupContainer">
-                                            <div class="input-group">
-                                                <span class="input-group-addon" style="max-width: 100%;"><i
-                                                        class="glyphicon glyphicon-list"></i></span>
-                                                <select class="selectpicker form-control">
-                                                    <% for(let i = 0; i < categories.length; i++) { %>
-                                                    <% let productCategory = value.length !== 0 ? value[0].categoryId.toString() : null; %>
-                                                    <% let selected = ( categories[i]._id.toString() === productCategory ) ? "selected" : ""; %>
-                                                    <option value='<%= categories[i]._id %>' <%=selected %>>
-                                                        <%= categories[i].name %></option>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label">Độ khó</label>
-                                        <div class="col-md-8 inputGroupContainer">
-                                            <div class="input-group">
-                                                <span class="input-group-addon" style="max-width: 100%;"><i
-                                                        class="glyphicon glyphicon-list"></i></span>
-                                                <select class="selectpicker form-control">
-                                                    <option>Easy</option>
-                                                    <option>Medium</option>
-                                                    <option>Hard</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </fieldset>
-                            </form>
-                        </td>
-                        <td colspan="1">
-                            <label class="control-label">Question</label>
-                            <form class="well form-horizontal" method="POST" action="/test">
-                                <fieldset>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 1" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 2" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 3" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 4" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 5" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 6" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 7" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 8" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 9" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-15 inputGroupContainer">
-                                            <div class="input-group"><span class="input-group-addon"><i
-                                                        class="glyphicon glyphicon-user"></i></span><input id="ques"
-                                                    name="question" placeholder="question 10" class="form-control"
-                                                    required="true" value="" type="text"></div>
-                                        </div>
-                                    </div>
-        </div>
-
-        </fieldset>
-        </form>
-        </td>
-        <td colspan="1">
-            <label class="control-label">Answer</label>
-            <form class="well form-horizontal" method="POST" action="/test">
-                <fieldset>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 1" class="form-control" required="true" value="" type="text">
+        <form class="form-horizontal" method="post" action="/tests">
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label">Content</label>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Tên Test</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                    <input name="name" placeholder="Name" class="form-control" value="" type="text">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 2" class="form-control" required="true" value="" type="text">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Danh mục</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="max-width: 100%;"><i
+                                            class="glyphicon glyphicon-list"></i></span>
+                                    <select class="selectpicker form-control" name="categoryId">
+                                        <% for(let i = 0; i < categories.length; i++) { %>
+                                        <% let productCategory = value.length !== 0 ? value[0].categoryId.toString() : null; %>
+                                        <% let selected = ( categories[i]._id.toString() === productCategory ) ? "selected" : ""; %>
+                                        <option value='<%= categories[i]._id %>' <%=selected %>>
+                                            <%= categories[i].name %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 3" class="form-control" required="true" value="" type="text">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Độ khó</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="max-width: 100%;"><i
+                                            class="glyphicon glyphicon-list"></i></span>
+                                    <select class="selectpicker form-control" name="difficuly">
+                                        <option value="1">Easy</option>
+                                        <option value="2">Medium</option>
+                                        <option value="3">Hard</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 4" class="form-control" required="true" value="" type="text">
-                            </div>
+                    </fieldset>
+                </div>
+                <div class="col-xs-8">
+                    <label class="control-label">Question</label>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <fieldset>
+                                <% for(let i = 0; i < 10; i++) { %>
+                                <div class="form-group">
+                                    <div class="col-md-15 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                            <input name="questions[<%=i%>]" placeholder="Question <%=i+1%>"
+                                                class="form-control" value="" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </fieldset>
+                        </div>
+                        <div class="col-xs-6">
+                            <fieldset>
+                                <% for(let i = 0; i < 10; i++) { %>
+                                <div class="form-group">
+                                    <div class="col-md-15 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                            <input name="answers[<%=i%>]" placeholder="Answers <%=i+1%>"
+                                                class="form-control" value="" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </fieldset>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 5" class="form-control" required="true" value="" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 6" class="form-control" required="true" value="" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 7" class="form-control" required="true" value="" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 8" class="form-control" required="true" value="" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 9" class="form-control" required="true" value="" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-15 inputGroupContainer">
-                            <div class="input-group"><span class="input-group-addon"><i
-                                        class="glyphicon glyphicon-user"></i></span><input id="Ans" name="Answer"
-                                    placeholder="Answer 10" class="form-control" required="true" value="" type="text">
-                            </div>
-                        </div>
-                    </div>
-
-                </fieldset>
-            </form>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-
-        <div class="clearfix form-actions">
-            <div class="col-md-offset-3 col-md-9">
-                <div>
-                    <button class="btn btn-info" type="submit">
-                        <i class="ace-icon fa fa-check bigger-110"></i>
-                        Thêm mới
-                    </button>
-                    <a href="/tests" class="btn btn-warning" role="button">
-                        <i class="ace-icon fa fa-close bigger-110"></i>
-                        Hủy
-                    </a>
                 </div>
             </div>
-        </div>
-
-
-
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <div>
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            Thêm mới
+                        </button>
+                        <a href="/tests" class="btn btn-warning" role="button">
+                            <i class="ace-icon fa fa-close bigger-110"></i>
+                            Hủy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

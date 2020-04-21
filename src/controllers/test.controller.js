@@ -56,7 +56,6 @@ let detailTest = async (req, res) => {
  */
 let postTest = async (req, res) => {
     let errorArr = [];
-
     // Create category
     try {
         const createdSuccess = await test.createTest(req.body);
@@ -106,17 +105,18 @@ let removeTest = async (req, res) => {
 
     // Get detail category
     const _id = req.params._id;
-    const result = await category.detailTest(_id);
+    const result = await test.detailTest(_id);
     if (!result) errorArr.push(transErrors.test.not_found);
 
     // Remove category
     try {
-        const itemDeleted = await category.removeTest(_id);
-        req.flash("success", transSuccess.category.test_deleted(itemDeleted.name));
+        const itemDeleted = await test.removeTest(_id);
+        req.flash("success", 'Xóa thành công');
         return res.redirect("/tests");
     } catch (error) {
         errorArr.push(error);
         req.flash("errors", errorArr);
+        console.log(error)
         return res.redirect("/tests/detail/" + _id);
     }
 };

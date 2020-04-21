@@ -1,5 +1,6 @@
 import TestModel from "../models/test.model";
 import CategoryModel from "../models/category.model";
+import QuestionModel from "../models/question.model";
 
 /**
  * This is function create Test
@@ -7,14 +8,32 @@ import CategoryModel from "../models/category.model";
  * @param {*} description 
  */
 let createTest = async (data) => {
-    const { name, difficuly, categoryId } = data;
+    const { name, difficuly, categoryId, questions, answers } = data;
     let item = {
         name,
         difficuly,
         categoryId
     }
     const test = await TestModel.add(item);
+    const newArray = [];
+    // Magic
+    questions.forEach((elementQuestion, index) => {
+        const elementAnswers = questions[index];
+        const newObject = {
+            question: elementQuestion,
+            answer: elementAnswers,
+            testId: test._id
+        };
+        newArray.push(newObject);
+    });
+    const questionsNew = await QuestionModel.add(newArray);
     await CategoryModel.pushTest(categoryId, test._id);
+    const promiseItem = [];
+    questionsNew.forEach((question) => {
+        const query = TestModel.pushItem(test.id, question);
+        promiseItem.push(query);
+    });
+    Promise.all(promiseItem);
     return test;
 }
 
