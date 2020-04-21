@@ -24,7 +24,7 @@ let QuestionSchema = new Schema({
 
 QuestionSchema.statics = {
     add(item) {
-        return this.create(item);
+        return this.insertMany(item);
     },
     list() {
         return this.find({});

@@ -42,10 +42,13 @@ TestSchema.statics = {
     },
     detail(id) {
         return this.findOne({
-            _id: id
-        }).populate('categoryId', {
-            name: 'name'
-        }).exec();
+                _id: id
+            })
+            .populate('categoryId', {
+                name: 'name'
+            })
+            .populate('questions')
+            .exec();
     },
     update(id, data) {
         return this.findOneAndUpdate({
@@ -57,7 +60,7 @@ TestSchema.statics = {
             _id: id
         }).exec();
     },
-    push(id, data) {
+    pushItem(id, data) {
         return this.findOneAndUpdate({
             _id: id
         }, {
@@ -66,7 +69,7 @@ TestSchema.statics = {
             }
         }).exec();
     },
-    pull(id, data) {
+    pullItem(id, data) {
         return this.findOneAndUpdate({
             _id: id
         }, {

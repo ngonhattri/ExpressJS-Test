@@ -20,25 +20,29 @@
             <h1>Thêm mới Test</h1>
         </div>
         <%- include("alert"); %>
-        <div class="row">
-            <div class="col-xs-12">
-                <form class="form-horizontal" method="POST" action="/tests">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right">Tiêu đề</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="name"
-                                        value="<%= value.length !== 0 ? value[0].name : '' %>" placeholder="Name"
-                                        class="col-xs-10 col-sm-7" />
+        <form class="form-horizontal" method="post" action="/tests">
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label">Content</label>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Tên Test</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                    <input name="name" placeholder="Name" class="form-control" value="" type="text">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 form-actions">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right">Danh mục</label>
-                                <div class="col-sm-10">
-                                    <select name="categoryId" class="form-control select2">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Danh mục</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="max-width: 100%;"><i
+                                            class="glyphicon glyphicon-list"></i></span>
+                                    <select class="selectpicker form-control" name="categoryId">
                                         <% for(let i = 0; i < categories.length; i++) { %>
                                         <% let productCategory = value.length !== 0 ? value[0].categoryId.toString() : null; %>
                                         <% let selected = ( categories[i]._id.toString() === productCategory ) ? "selected" : ""; %>
@@ -48,32 +52,77 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label no-padding-right">Độ khó</label>
-                                <div class="col-sm-10">
-                                    <input type="number" name="difficulty"
-                                        value="<%= value.length !== 0 ? value[0].difficulty : '' %>"
-                                        placeholder="Difficulty" class="col-xs-10 col-sm-7" />
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Độ khó</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="max-width: 100%;"><i
+                                            class="glyphicon glyphicon-list"></i></span>
+                                    <select class="selectpicker form-control" name="difficuly">
+                                        <option value="1">Easy</option>
+                                        <option value="2">Medium</option>
+                                        <option value="3">Hard</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="clearfix form-actions">
-                        <div class="col-md-offset-3 col-md-9">
-                            <div>
-                                <button class="btn btn-info" type="submit">
-                                    <i class="ace-icon fa fa-check bigger-110"></i>
-                                    Thêm mới
-                                </button>
-                                <a href="/tests" class="btn btn-warning" role="button">
-                                    <i class="ace-icon fa fa-close bigger-110"></i>
-                                    Hủy
-                                </a>
-                            </div>
+                    </fieldset>
+                </div>
+                <div class="col-xs-8">
+                    <label class="control-label">Question</label>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <fieldset>
+                                <% for(let i = 0; i < 10; i++) { %>
+                                <div class="form-group">
+                                    <div class="col-md-15 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                            <input name="questions[<%=i%>]" placeholder="Question <%=i+1%>"
+                                                class="form-control" value="" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </fieldset>
+                        </div>
+                        <div class="col-xs-6">
+                            <fieldset>
+                                <% for(let i = 0; i < 10; i++) { %>
+                                <div class="form-group">
+                                    <div class="col-md-15 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                            <input name="answers[<%=i%>]" placeholder="Answers <%=i+1%>"
+                                                class="form-control" value="" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </fieldset>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <div>
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            Thêm mới
+                        </button>
+                        <a href="/tests" class="btn btn-warning" role="button">
+                            <i class="ace-icon fa fa-close bigger-110"></i>
+                            Hủy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
