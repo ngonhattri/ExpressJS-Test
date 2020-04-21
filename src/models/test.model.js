@@ -46,6 +46,12 @@ TestSchema.statics = {
     },
     remove(id) {
         return this.findOneAndRemove({ _id: id }).exec();
+    },
+    push(id, data) {
+        return this.findOneAndUpdate({ _id: id }, { $push: { questions: data } }).exec();
+    },
+    pull(id, data) {
+        return this.findOneAndUpdate({ _id: id }, { $pull: { questions: data } }).exec();
     }
 };
 

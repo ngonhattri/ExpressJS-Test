@@ -9,6 +9,11 @@ let CategorySchema = new Schema({
     description: {
         type: String,
     },
+    tests: [
+        {
+            type: mongoose.Schema.Types.ObjectId, ref: 'test'
+        }
+    ],
     createdAt: {
         type: Number,
         default: Date.now
@@ -37,6 +42,12 @@ CategorySchema.statics = {
     },
     remove(id) {
         return this.findOneAndRemove({ _id: id }).exec();
+    },
+    push(id, data) {
+        return this.findOneAndUpdate({ _id: id }, { $push: { tests: data } }).exec();
+    },
+    pull(id, data) {
+        return this.findOneAndUpdate({ _id: id }, { $pull: { tests: data } }).exec();
     }
 };
 

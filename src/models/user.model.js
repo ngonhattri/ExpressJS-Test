@@ -51,6 +51,12 @@ UserSchema.statics = {
     },
     updatePassword(id, hashedPassword) {
         return this.findOneAndUpdate({ _id: id }, { "password": hashedPassword }).exec();
+    },
+    push(id, data) {
+        return this.findOneAndUpdate({ _id: id }, { $push: { done_test: data } }).exec();
+    },
+    pull(id, data) {
+        return this.findOneAndUpdate({ _id: id }, { $pull: { done_test: data } }).exec();
     }
 };
 
