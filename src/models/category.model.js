@@ -29,7 +29,7 @@ CategorySchema.statics = {
         return this.create(item);
     },
     list() {
-        return this.find({});
+        return this.find({}).populate('tests');
     },
     count(query = {}) {
         return this.countDocuments(query);
@@ -43,11 +43,11 @@ CategorySchema.statics = {
     remove(id) {
         return this.findOneAndRemove({ _id: id }).exec();
     },
-    push(id, data) {
-        return this.findOneAndUpdate({ _id: id }, { $push: { tests: data } }).exec();
+    pushTest(id, testId) {
+        return this.findOneAndUpdate({ _id: id }, { $push: { tests: testId } }).exec();
     },
-    pull(id, data) {
-        return this.findOneAndUpdate({ _id: id }, { $pull: { tests: data } }).exec();
+    pullTest(id, testId) {
+        return this.findOneAndUpdate({ _id: id }, { $pull: { tests: testId } }).exec();
     }
 };
 

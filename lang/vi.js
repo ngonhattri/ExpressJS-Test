@@ -9,12 +9,6 @@ export const transValidation = {
         name_incorrect: "Độ dài tên không đủ",
         description_incorrect: "Độ dài nội dung không đủ",
     },
-    blog: {
-        name_incorrect: "Độ dài tên không đủ",
-        content_incorrect: "Độ dài nội dùng không đủ",
-        image_incorrect: "Độ dài ảnh không đủ",
-        category_incorrect: "Chưa chọn danh mục",
-    },
     test: {
         question_incorrect: "Độ dài câu hỏi không đủ",
         correctAns_incorrect: "Độ dài đáp án không đủ",
@@ -41,8 +35,8 @@ export const transErrors = {
     category: {
         not_found: "Danh mục không tồn tại"
     },
-    blog: {
-        not_found: "Bài viết không tồn tại"
+    test: {
+        not_found: "Test không tồn tại"
     }
 }
 
@@ -65,15 +59,15 @@ export const transSuccess = {
             return `Xóa danh mục <strong>${name}</strong> thành công`
         }
     },
-    blog: {
-        blog_created: (name) => {
-            return `Bài viết <strong>${name}</strong> đã được tạo thành công`
+    test: {
+        test_created: (name) => {
+            return `Bài test <strong>${name}</strong> đã được tạo thành công`
         },
-        blog_updated: (name) => {
-            return `Bài viết <strong>${name}</strong> đã được cập nhật thành công`
+        test_updated: (name) => {
+            return `Bài test <strong>${name}</strong> đã được cập nhật thành công`
         },
-        blog_deleted: (name) => {
-            return `Xóa bài viết <strong>${name}</strong> thành công`
+        test_deleted: (name) => {
+            return `Xóa bài test <strong>${name}</strong> thành công`
         }
     },
     auth: {

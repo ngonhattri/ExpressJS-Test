@@ -15,7 +15,7 @@
     <div class="page-content">
         <div class="widget-box">
             <div class="widget-header">
-                <h4 class="widget-title">Quản lý Test</h4>
+                <h4 class="widget-title">Quản lý test</h4>
                 <div class="widget-toolbar no-border">
                     <a href="/tests/add" class="btn btn-sm btn-info">
                         <i class="ace-icon fa fa-plus"></i> Thêm mới test
@@ -24,20 +24,12 @@
             </div>
             <div class="widget-body">
                 <div class="widget-main">
-                    <div class="search-active-form">
-                        <div class="pageSizebox pull-right">
-                            <div class="pageSizeNumber">
-                                Tổng số cau hoi: <%= numOfResults %>
-                            </div>
-                        </div>
-                    </div>
                     <%- include("alert"); %>
                     <table id="simple-table" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th width="30%">Question</th>
-                                <th width="30%">Category</th>
-                                <th width="20%">Status</th>
+                                <th width="40%">Tên</th>
+                                <th width="40%">Danh mục</th>
                                 <th width="20%">Custom</th>
                             </tr>
                         </thead>
@@ -46,20 +38,12 @@
                             <% products.forEach(product => { %>
                             <tr>
 
-                                <td><%= product.question %></td>
+                                <td><%= product.name %></td>
                                 <% if(product.categoryId) { %>
-                                <td><%= product.categoryId.question %></td>
+                                <td><%= product.categoryId.name %></td>
                                 <% } %>
-
                                 <% if(!product.categoryId) { %>
                                 <td>Chưa có danh mục</td>
-                                <% } %>
-
-                                <% if(product.status === true) { %>
-                                <td><span class="badge badge-success">Actived</span></td>
-                                <% } %>
-                                <% if(product.status === false) { %>
-                                <td><span class="badge badge-danger">Blocked</span></td>
                                 <% } %>
 
                                 <td>
@@ -73,9 +57,6 @@
                             <% }); %>
                         </tbody>
                     </table>
-                </div>
-                <div class="widget-toolbox padding-8 clearfix">
-                    
                 </div>
             </div>
         </div>

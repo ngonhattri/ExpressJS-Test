@@ -1,16 +1,21 @@
 import TestModel from "../models/test.model";
+import CategoryModel from "../models/category.model";
 
 /**
  * This is function create Test
  * @param {*} name 
  * @param {*} description 
  */
-let createTest = async (name, description) => {
+let createTest = async (data) => {
+    const { name, difficuly, categoryId } = data;
     let item = {
         name,
-        description,
+        difficuly,
+        categoryId
     }
-    return await TestModel.add(item);
+    const test = await TestModel.add(item);
+    await CategoryModel.pushTest(categoryId, test._id);
+    return test;
 }
 
 /**
@@ -19,7 +24,20 @@ let createTest = async (name, description) => {
  * @param {*} data 
  */
 let updateTest = async (id, data) => {
-    return await TestModel.update(id, data);
+    const { name, difficuly, categoryId } = data;
+    let item = {
+        name,
+        difficuly,
+        categoryId
+    };
+    const test = await TestModel.update(id, item);
+    // nếu category mới khác category cũ 
+    // => xóa cái cũ thêm cái mới bên category
+    if (test.categoryId !== categoryId) {
+        await CategoryModel.pullTest(test.categoryId, test._id);
+        await CategoryModel.pushTest(categoryId, test._id);
+    }
+    return test;
 };
 
 /**
@@ -34,8 +52,9 @@ let detailTest = async (id) => {
  * This is function remove Test
  * @param {*} id 
  */
-let removeTest = async (id) => {
-    return await TestModel.remove(id);
+let removeTest = async (idTest, idCategory) => {
+    const test = await TestModel.remove(idTest);
+    await CategoryModel.pullTest(idCategory, test._id);
 }
 
 /**

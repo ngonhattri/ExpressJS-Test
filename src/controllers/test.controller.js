@@ -1,5 +1,4 @@
 import { test, category } from "./../services/index";
-import { validationResult } from "express-validator/check";
 import { transErrors, transSuccess } from "../../lang/vi";
 
 /**
@@ -8,38 +7,17 @@ import { transErrors, transSuccess } from "../../lang/vi";
  * @param {*} res 
  */
 let getTests = async (req, res) => {
-    let errorArr = [];
-
-    const resPerPage = 8;
-    const page = Number(req.query.page) || 1;
-    try {
-        const foundProducts = await test.getPaginateTest(resPerPage, req.query);
-        const numOfResults = await test.getCountTest(req.query);
-        return res.render('main/tests/list', {
-            products: foundProducts,
-            currentPage: page,
-            pages: Math.ceil(numOfResults / resPerPage),
-            numOfResults,
-            errors: req.flash("errors"),
-            success: req.flash("success")
-        });
-    } catch (error) {
-        errorArr.push(error.message);
-        req.flash("errors", errorArr);
-        return res.render('main/tests/list', {
-            products: [],
-            currentPage: 0,
-            pages: 0,
-            numOfResults: 0,
-            errors: req.flash("errors"),
-            success: req.flash("success")
-        });
-    }
-
+    const results = await test.getTests();
+    return res.render('main/tests/list', {
+        products: results,
+        errors: req.flash("errors"),
+        success: req.flash("success")
+    });
 };
 
+
 /**
- * This is function get view list test
+ * This is function get view create category
  * @param {*} req 
  * @param {*} res 
  */
@@ -49,22 +27,22 @@ let createTest = async (req, res) => {
         categories: categories,
         errors: req.flash("errors"),
         success: req.flash("success"),
-        value: req.flash("value"),
+        value: req.flash("value")
     });
 }
 
 /**
- * This is function get detail test
+ * This is function get detail category
  * @param {*} req 
  * @param {*} res 
  */
 let detailTest = async (req, res) => {
     const _id = req.params._id;
-    const detail = await test.detailTest(_id);
+    const result = await test.detailTest(_id);
     const categories = await category.getCategories();
-    if (!detail) return res.render("main/404");
+    if (!result) return res.render("main/404");
     return res.render('main/tests/detail', {
-        product: detail,
+        product: result,
         categories,
         errors: req.flash("errors"),
         success: req.flash("success")
@@ -72,29 +50,17 @@ let detailTest = async (req, res) => {
 }
 
 /**
- * This is function create test
+ * This is function create category
  * @param {*} req 
  * @param {*} res 
  */
-let postTests = async (req, res) => {
+let postTest = async (req, res) => {
     let errorArr = [];
 
-    // Check validate
-    let validationErrors = validationResult(req);
-    if (!validationErrors.isEmpty()) {
-        let errors = Object.values(validationErrors.mapped());
-        errors.forEach(item => {
-            errorArr.push(item.msg);
-        });
-        req.flash("errors", errorArr);
-        req.flash("value", req.body);
-        return res.redirect("/tests/add");
-    }
-
-    // Create test
+    // Create category
     try {
-        const creatTestSuccess = await test.createTest(req.body.question, req.body.correctAns, req.body.difficulty, req.body.categoryId);
-        req.flash("success", transSuccess.test.test_created(creatTestSuccess.question));
+        const createdSuccess = await test.createTest(req.body);
+        req.flash("success", transSuccess.test.test_created(createdSuccess.name));
         return res.redirect("/tests");
     } catch (error) {
         errorArr.push(error);
@@ -105,118 +71,61 @@ let postTests = async (req, res) => {
 }
 
 /**
- * This is function update test
+ * This is function update category
  * @param {*} req 
  * @param {*} res 
  */
 let updateTest = async (req, res) => {
     let errorArr = [];
 
-    // Get detail test
+    // Get detail category
     const _id = req.params._id;
-    const detail = await test.detailTest(_id);
-    if (!detail) errorArr.push(transErrors.test.not_found);
+    const result = await test.detailTest(_id);
+    if (!result) errorArr.push(transErrors.test.not_found);
 
-    // Check validate
-    let validationErrors = validationResult(req)
-    if (validationErrors.isEmpty() == false) {
-        let errors = Object.values(validationErrors.mapped());
-        errors.forEach((element) => {
-            errorArr.push(element.msg);
-        });
-        req.flash('errors', errorArr);
-        return res.redirect("/tests/" + _id);
-    }
-
-    // Update Test
+    // Update category
     try {
-        const updateTestSuccess = await test.updateTest(_id, req.body);
-        req.flash("success", transSuccess.test.test_updated(updateTestSuccess.question));
+        const updateSuccess = await test.updateTest(_id, req.body);
+        req.flash("success", transSuccess.test.test_updated(updateSuccess.name));
         return res.redirect("/tests");
     } catch (error) {
         errorArr.push(error);
         req.flash("errors", errorArr);
-        return res.redirect("/tests/" + _id);
+        console.log(error)
+        return res.redirect("/tests/detail/" + _id);
     }
 };
 
 /**
- * This is function remove test
+ * This is function remove category
  * @param {*} req 
  * @param {*} res 
  */
 let removeTest = async (req, res) => {
     let errorArr = [];
 
-    // Get detail
+    // Get detail category
     const _id = req.params._id;
-    const detail = await test.detailTest(_id);
-    if (!detail) errorArr.push(transErrors.test.not_found);
+    const result = await category.detailTest(_id);
+    if (!result) errorArr.push(transErrors.test.not_found);
 
-    // Check validate
-    let validationErrors = validationResult(req)
-    if (validationErrors.isEmpty() == false) {
-        let errors = Object.values(validationErrors.mapped());
-        errors.forEach((element) => {
-            errorArr.push(element.msg);
-        });
-        req.flash('errors', errorArr);
-        return res.redirect("/tests/" + _id);
-    }
-
+    // Remove category
     try {
-        const testDeleted = await test.removeTest(_id);
-        req.flash("success", transSuccess.test.test_deleted(testDeleted.question));
+        const itemDeleted = await category.removeTest(_id);
+        req.flash("success", transSuccess.category.test_deleted(itemDeleted.name));
         return res.redirect("/tests");
     } catch (error) {
         errorArr.push(error);
         req.flash("errors", errorArr);
-        return res.redirect("/tests/" + _id);
+        return res.redirect("/tests/detail/" + _id);
     }
 };
 
-/**
- * This is function change status test
- * @param {*} req 
- * @param {*} res 
- */
-let changeStatus = async (req, res) => {
-    let errorArr = [];
-
-    // Get detail test
-    const _id = req.params._id;
-    const detail = await test.detailTest(_id);
-    if (!detail) errorArr.push(transErrors.test.not_found);
-
-    // Check validate
-    let validationErrors = validationResult(req)
-    if (validationErrors.isEmpty() == false) {
-        let errors = Object.values(validationErrors.mapped());
-        errors.forEach((element) => {
-            errorArr.push(element.msg);
-        });
-        req.flash('errors', errorArr);
-        return res.redirect("/tests/" + _id);
-    }
-
-    // Update status
-    try {
-        const updateTestSuccess = await test.updateStatus(_id, detail.status);
-        req.flash("success", transSuccess.test.test_updated(updateTestSuccess.question));
-        return res.redirect("/tests");
-    } catch (error) {
-        errorArr.push(error);
-        req.flash("errors", errorArr);
-        return res.redirect("/tests/" + _id);
-    }
-}
-
 module.exports = {
     getTests,
-    createTest,
+    postTest,
     detailTest,
-    postTests,
-    updateTest,
     removeTest,
-    changeStatus
+    updateTest,
+    createTest
 };

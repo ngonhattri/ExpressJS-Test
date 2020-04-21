@@ -33,11 +33,10 @@ let initRoutes = (app) => {
 
     // Test
     router.get("/tests", checkLoggedIn, tests.getTests);
-    router.post("/tests", checkLoggedIn, testValid.test, tests.postTests);
+    router.post("/tests", checkLoggedIn, testValid.test, tests.postTest);
     router.get("/tests/add/", checkLoggedIn, tests.createTest);
     router.get("/tests/detail/:_id", checkLoggedIn, tests.detailTest);
     router.put("/tests/update/:_id", checkLoggedIn, testValid.test, tests.updateTest);
-    router.put("/tests/status/:_id", checkLoggedIn, testValid.test, tests.changeStatus);
     router.delete("/tests/delete/:_id", checkLoggedIn, tests.removeTest);
 
     // Category

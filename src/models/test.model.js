@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 let Schema = mongoose.Schema;
 
 let TestSchema = new Schema({
+    name: {
+        type: String
+    },
     questions: [
         {
             type: mongoose.Schema.Types.ObjectId, ref: 'question'
@@ -12,11 +15,8 @@ let TestSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'category'
     },
     difficuly: {
-        type: String
-    },
-    status: {
-        type: Boolean,
-        default: false
+        type: Number,
+        default: 1
     },
     createdAt: {
         type: Number,
@@ -33,13 +33,13 @@ TestSchema.statics = {
         return this.create(item);
     },
     list() {
-        return this.find({});
+        return this.find({}).populate('categoryId', { name: 'name' });
     },
     count(query = {}) {
         return this.countDocuments(query);
     },
     detail(id) {
-        return this.findOne({ _id: id }).exec();
+        return this.findOne({ _id: id }).populate('categoryId', { name: 'name' }).exec();
     },
     update(id, data) {
         return this.findOneAndUpdate({ _id: id }, data).exec();

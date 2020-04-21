@@ -12,19 +12,10 @@ let UserSchema = new Schema({
         type: String,
         default: 'https://res.cloudinary.com/kori/image/upload/v1545012923/no_avatar.png'
     },
-    done_test: [
+    complete: [
         {
-            test: {
-                type: Schema.Types.ObjectId, ref: 'test'
-            },
-            point: {
-                type: Number,
-            },
-            date_completed: {
-                type: Date,
-                default: Date.now
-            },
-        },
+            type: mongoose.Schema.Types.ObjectId, ref: 'complete'
+        }
     ],
     createdAt: {
         type: Number,
