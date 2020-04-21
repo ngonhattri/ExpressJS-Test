@@ -13,7 +13,7 @@ let createTest = async (data) => {
         difficulty,
         categoryId,
         questions,
-        answer
+
     } = data;
     let item = {
         name,
