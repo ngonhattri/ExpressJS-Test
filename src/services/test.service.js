@@ -52,7 +52,9 @@ let updateTest = async (id, data) => {
     const {
         name,
         difficulty,
-        categoryId
+        categoryId,
+        questions,
+        answers
     } = data;
     let item = {
         name,
@@ -60,12 +62,31 @@ let updateTest = async (id, data) => {
         categoryId
     };
     const test = await TestModel.update(id, item);
+    const newArray = [];
+    questions.forEach((elementQuestion, index) => {
+        const elementAnswers = answers[index];
+        const newObject = {
+            question: elementQuestion,
+            answer: elementAnswers,
+            testId: test._id
+        };
+        newArray.push(newObject);
+    });
+    const questionsNew = await QuestionModel.update(id, newArray);
     // nếu category mới khác category cũ 
     // => xóa cái cũ thêm cái mới bên category
     if (test.categoryId !== categoryId) {
         await CategoryModel.pullTest(test.categoryId, test._id);
         await CategoryModel.pushTest(categoryId, test._id);
     }
+
+    // Update question
+    const promiseItem = [];
+    questionsNew.forEach((question) => {
+        const query = TestModel.pushItem(test.id, question);
+        promiseItem.push(query);
+    });
+    Promise.all(promiseItem);
     return test;
 };
 
@@ -78,8 +99,8 @@ let detailTest = async (id) => {
 }
 
 /**
- * This is function remove Test
- * @param {*} id 
+ * This is function remove Test & Question + Answer
+ * @param {*} id t
  */
 let removeTest = async (idTest, idCategory) => {
     const test = await TestModel.remove(idTest);
