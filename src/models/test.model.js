@@ -42,8 +42,8 @@ TestSchema.statics = {
     },
     detail(id) {
         return this.findOne({
-                _id: id
-            })
+            _id: id
+        })
             .populate('categoryId', {
                 name: 'name'
             })
@@ -69,15 +69,10 @@ TestSchema.statics = {
             }
         }).exec();
     },
-    pullItem(id, data) {
+    removeAllQuestionInItem(id) {
         return this.findOneAndUpdate({
             _id: id
-        }, {
-            $pull: {
-                questions: data
-            }
-        }).exec();
+        }, { $set: { questions: [] } }).exec();
     }
-};
-
+}
 module.exports = mongoose.model('test', TestSchema);

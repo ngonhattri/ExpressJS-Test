@@ -8,6 +8,7 @@ import QuestionModel from "../models/question.model";
  * @param {*} description 
  */
 let createTest = async (data) => {
+    // Init variable
     const {
         name,
         difficulty,
@@ -20,9 +21,16 @@ let createTest = async (data) => {
         difficulty,
         categoryId
     }
-    const test = await TestModel.add(item);
     const newArray = [];
-    // Magic
+    const promiseItem = [];
+
+    // Create test
+    const test = await TestModel.add(item);
+
+    // Update Category
+    await CategoryModel.pushTest(categoryId, test._id);
+
+    // Create question
     questions.forEach((elementQuestion, index) => {
         const elementAnswers = answers[index];
         const newObject = {
@@ -33,8 +41,8 @@ let createTest = async (data) => {
         newArray.push(newObject);
     });
     const questionsNew = await QuestionModel.add(newArray);
-    await CategoryModel.pushTest(categoryId, test._id);
-    const promiseItem = [];
+
+    // Update test after question created
     questionsNew.forEach((question) => {
         const query = TestModel.pushItem(test.id, question);
         promiseItem.push(query);
@@ -49,6 +57,10 @@ let createTest = async (data) => {
  * @param {*} data 
  */
 let updateTest = async (id, data) => {
+    // Get test by id
+    const test = await TestModel.findById(id);
+    if (!test) throw { message: 'Test is not found', status: 404 };
+
     const {
         name,
         difficulty,
@@ -56,12 +68,24 @@ let updateTest = async (id, data) => {
         questions,
         answers
     } = data;
-    let item = {
-        name,
-        difficulty,
-        categoryId
-    };
-    const test = await TestModel.update(id, item);
+
+    // Update test and category
+    test.name = name;
+    test.difficulty = difficulty
+    test.categoryId = categoryId;
+    if (test.categoryId !== categoryId) {
+        Promise.all([
+            CategoryModel.pullTest(test.categoryId, test._id),
+            CategoryModel.pushTest(categoryId, test._id)
+        ])
+    }
+
+    Promise.all([
+        TestModel.update(id, test),
+        QuestionModel.removeByTestId(id),
+        TestModel.removeAllQuestionInItem(id)
+    ])
+    // Create test
     const newArray = [];
     questions.forEach((elementQuestion, index) => {
         const elementAnswers = answers[index];
@@ -72,15 +96,8 @@ let updateTest = async (id, data) => {
         };
         newArray.push(newObject);
     });
-    const questionsNew = await QuestionModel.update(id, newArray);
-    // nếu category mới khác category cũ 
-    // => xóa cái cũ thêm cái mới bên category
-    if (test.categoryId !== categoryId) {
-        await CategoryModel.pullTest(test.categoryId, test._id);
-        await CategoryModel.pushTest(categoryId, test._id);
-    }
+    const questionsNew = await QuestionModel.add(newArray);
 
-    // Update question
     const promiseItem = [];
     questionsNew.forEach((question) => {
         const query = TestModel.pushItem(test.id, question);

@@ -26,20 +26,8 @@ QuestionSchema.statics = {
     add(item) {
         return this.insertMany(item);
     },
-    list() {
-        return this.find({});
-    },
-    count(query = {}) {
-        return this.countDocuments(query);
-    },
-    detail(id) {
-        return this.findOne({ _id: id }).exec();
-    },
-    update(id, data) {
-        return this.findOneAndUpdate({ _id: id }, data).exec();
-    },
-    remove(id) {
-        return this.findOneAndRemove({ _id: id }).exec();
+    removeByTestId(testId) {
+        return this.deleteMany({ testId: testId }).exec();
     }
 };
 

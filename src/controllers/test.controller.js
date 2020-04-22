@@ -82,7 +82,7 @@ let updateTest = async (req, res) => {
     const result = await test.detailTest(_id);
     if (!result) errorArr.push(transErrors.test.not_found);
 
-    // Update category
+    // Update 
     try {
         const updateSuccess = await test.updateTest(_id, req.body);
         req.flash("success", transSuccess.test.test_updated(updateSuccess.name));

@@ -19,114 +19,116 @@
         <div class="page-header">
             <h1>Cập nhật <%= product.name %></h1>
         </div>
-        <div class="row">
-            <div class="col-xs-4">
-                <label class="control-label">Content</label>
-                <fieldset>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Tên Test</label>
-                        <div class="col-md-8 inputGroupContainer">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon-user"></i>
-                                </span>
-                                <input name="name" placeholder="Name" class="form-control" value="<%= product.name %>"
-                                    type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Danh mục</label>
-                        <div class="col-md-8 inputGroupContainer">
-                            <div class="input-group">
-                                <span class="input-group-addon" style="max-width: 100%;"><i
-                                        class="glyphicon glyphicon-list"></i></span>
-                                <select class="selectpicker form-control" name="categoryId">
-                                    <% for(let i = 0; i < categories.length; i++) { %>
-                                    <% let productCategory = product.categoryId ? product.categoryId._id.toString() : null; %>
-                                    <% let selected = ( categories[i]._id.toString() === productCategory ) ? "selected" : ""; %>
-                                    <option value='<%= categories[i]._id %>' <%=selected %>>
-                                        <%= categories[i].name %></option>
-                                    <% } %>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Độ khó</label>
-                        <div class="col-md-8 inputGroupContainer">
-                            <div class="input-group">
-                                <span class="input-group-addon" style="max-width: 100%;"><i
-                                        class="glyphicon glyphicon-list"></i></span>
-                                <select class="selectpicker form-control" name="difficuly">
-                                    <option value="1">Easy</option>
-                                    <option value="2">Medium</option>
-                                    <option value="3">Hard</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="col-xs-8">
-                <label class="control-label">Question</label>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <fieldset>
-                            <% for(let i = 0; i < 10; i++) { %>
-                            <div class="form-group">
-                                <div class="col-md-15 inputGroupContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-user"></i>
-                                        </span>
-                                        <input name="questions[<%=i%>]" placeholder="Question <%=i+1%>"
-                                            class="form-control" value="<%= product.questions[i].question%>" type="text" />
-                                    </div>
+        <form class="form-horizontal" action="/tests/update/<%= product._id %>?_method=PUT" method="POST">
+            <div class="row">
+                <div class="col-xs-4">
+                    <label class="control-label">Content</label>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Tên Test</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                    <input name="name" placeholder="Name" class="form-control"
+                                        value="<%= product.name %>" type="text">
                                 </div>
                             </div>
-                            <% } %>
-                        </fieldset>
-                    </div>
-                    <div class="col-xs-6">
-                        <fieldset>
-                            <% for(let i = 0; i < 10; i++) { %>
-                            <div class="form-group">
-                                <div class="col-md-15 inputGroupContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-user"></i>
-                                        </span>
-                                        <input name="answers[<%=i%>]" placeholder="Answers <%=i+1%>"
-                                            class="form-control" value="<%= product.questions[i].answer %>"
-                                            type="text" />
-                                    </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Danh mục</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="max-width: 100%;"><i
+                                            class="glyphicon glyphicon-list"></i></span>
+                                    <select class="selectpicker form-control" name="categoryId">
+                                        <% for(let i = 0; i < categories.length; i++) { %>
+                                        <% let productCategory = product.categoryId ? product.categoryId._id.toString() : null; %>
+                                        <% let selected = ( categories[i]._id.toString() === productCategory ) ? "selected" : ""; %>
+                                        <option value='<%= categories[i]._id %>' <%=selected %>>
+                                            <%= categories[i].name %></option>
+                                        <% } %>
+                                    </select>
                                 </div>
                             </div>
-                            <% } %>
-                        </fieldset>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Độ khó</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="max-width: 100%;"><i
+                                            class="glyphicon glyphicon-list"></i></span>
+                                    <select class="selectpicker form-control" name="difficuly">
+                                        <option value="1">Easy</option>
+                                        <option value="2">Medium</option>
+                                        <option value="3">Hard</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-xs-8">
+                    <label class="control-label">Question</label>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <fieldset>
+                                <% for(let i = 0; i < 10; i++) { %>
+                                <div class="form-group">
+                                    <div class="col-md-15 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                            <input name="questions[<%=i%>]" placeholder="Question <%=i+1%>"
+                                                class="form-control"
+                                                value="<%= product.questions[i] && product.questions[i].question ? product.questions[i].question : '' %>"
+                                                type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </fieldset>
+                        </div>
+                        <div class="col-xs-6">
+                            <fieldset>
+                                <% for(let i = 0; i < 10; i++) { %>
+                                <div class="form-group">
+                                    <div class="col-md-15 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                            <input name="answers[<%=i%>]" placeholder="Answers <%=i+1%>"
+                                                class="form-control" value="<%= product.questions[i] && product.questions[i].answer ? product.questions[i].answer : '' %>"
+                                                type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <div>
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            Cập nhật
+                        </button>
+                        <a href="/tests" class="btn btn-warning" role="button">
+                            <i class="ace-icon fa fa-close bigger-110"></i>
+                            Hủy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
         <div class="row">
             <div class="col-xs-12">
-                <form class="form-horizontal" action="/tests/update/<%= product._id %>?_method=PUT" method="POST">
-                    <div class="clearfix form-actions">
-                        <div class="col-md-offset-3 col-md-9">
-                            <div>
-                                <button class="btn btn-info" type="submit">
-                                    <i class="ace-icon fa fa-check bigger-110"></i>
-                                    Cập nhật
-                                </button>
-                                <a href="/tests" class="btn btn-warning" role="button">
-                                    <i class="ace-icon fa fa-close bigger-110"></i>
-                                    Hủy
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
                 <hr />
                 <form action="/tests/delete/<%= product._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger" type="submit">
@@ -138,7 +140,3 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.ckeditor.com/4.13.1/full/ckeditor.js"></script>
-<script>
-    CKEDITOR.replace('editor');
-</script>
