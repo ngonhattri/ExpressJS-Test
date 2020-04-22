@@ -13,7 +13,7 @@ let createTest = async (data) => {
         difficulty,
         categoryId,
         questions,
-
+        answers
     } = data;
     let item = {
         name,
@@ -24,7 +24,7 @@ let createTest = async (data) => {
     const newArray = [];
     // Magic
     questions.forEach((elementQuestion, index) => {
-        const elementAnswers = questions[index];
+        const elementAnswers = answers[index];
         const newObject = {
             question: elementQuestion,
             answer: elementAnswers,

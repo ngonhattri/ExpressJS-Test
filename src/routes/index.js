@@ -1,6 +1,6 @@
 import express from "express";
-import { home, auth, tests, api, categories, questions } from "./../controllers/index";
-import { authValid, categoryValid, testValid, questionValid } from "./../validation/index";
+import { home, auth, tests, api, categories } from "./../controllers/index";
+import { authValid, categoryValid, testValid } from "./../validation/index";
 import passport from "passport";
 import initPassportLocal from "../config/passport_local";
 import { checkDefault, checkLoggedIn, checkLoggedOut } from '../config/middleware';
@@ -46,13 +46,6 @@ let initRoutes = (app) => {
     router.get("/categories/detail/:_id", checkLoggedIn, categories.detailCategory);
     router.put("/categories/update/:_id", checkLoggedIn, categoryValid.category, categories.updateCategory);
     router.delete("/categories/delete/:_id", checkLoggedIn, categories.removeCategory);
-
-    router.get("/questions", checkLoggedIn, questions.getQuestions);
-    router.post("/questions", checkLoggedIn, questionValid.question, questions.postQuestion);
-    router.get("/questions/add", checkLoggedIn, questions.createQuestion);
-    router.get("/questions/detail/:_id", checkLoggedIn, questions.detailQuestion);
-    router.put("/questions/update/:_id", checkLoggedIn, questionValid.question, questions.updateQuestion);
-    router.delete("/questions/delete/:_id", checkLoggedIn, questions.removeQuestion);
 
     // 404
     router.get("*", (req, res) => {
